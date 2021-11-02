@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .container {
+            width: 1024px;
+            padding: 2em;
+        }
+
+        .bold-blue {
+            font-weight: bold;
+            color: #0277BD;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Your request has been confirmed</h1>
+        <h5>with Request ID </h5>
+        <p> Mémo pour les options du Bootstrap Table : <a
+                href="http://bootstrap-table.wenzhixin.net.cn/documentation/">Bootstrap Table Documentation</a></p>
+        <p>Eléments de Bootstrap Table utilisés : <a href="http://jsfiddle.net/wenyi/e3nk137y/3178/">Data Checkbox</a>,
+            pour cocher les éléments à sélectionner, <a
+                href="https://github.com/wenzhixin/bootstrap-table-examples/blob/master/extensions/filter-control.html">extension
+                Filter control</a>, pour les filtres via les colonnes, <a
+                href="https://github.com/kayalshri/tableExport.jquery.plugin">extension Data export</a> pour exporter
+        </p>
+
+        <div id="toolbar">
+            <select class="form-control">
+                <option value="">Export Basic</option>
+                <option value="all">Export All</option>
+                <option value="selected">Export Selected</option>
+            </select>
+        </div>
+        <div class="col">
+            <table id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-export="true"
+                data-click-to-select="true" data-toolbar="#toolbar">
+                <thead>
+                    <tr>
+                        <th  style="width: 5%" data-field="state" data-checkbox="true"></th>
+                        <th  style="width: 30%" data-field="prenom" data-filter-control="input" data-sortable="true">Prénom
+                        </th>
+                        <th  style="width: 30%" data-field="date" data-filter-control="select" data-sortable="true">Date</th>
+                        <th  style="width: 20%" data-field="examen" data-filter-control="select" data-sortable="true">Examen
+                        </th> 
+                        <th   data-field="note" data-sortable="true">Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="rqdetail : ${allrequestdetails}">
+                        <td class="bs-checkbox "><input data-index="-1" name="btSelectItem" type="checkbox"></td>
+                        <td><span th:text = "${rqdetail.requestID}"></span></td>
+                        <td><span th:text = "${rqdetail.requestDetailsID}"></span></td>
+                        <td><span th:text = "${rqdetail.productID}"></span></td>
+                        <td><span th:text = "${rqdetail.quantity}"></span></td>
+                        <td><span th:text = "${rqdetail.productprice}"></span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        //exporte les données sélectionnées
+        var $table = $('#table');
+        $(function () {
+            $('#toolbar').find('select').change(function () {
+                $table.bootstrapTable('refreshOptions', {
+                    exportDataType: $(this).val()
+                });
+            });
+        })
+
+        var trBoldBlue = $("table");
+
+        $(trBoldBlue).on("click", "tr", function () {
+            $(this).toggleClass("bold-blue");
+        });
+    </script>
+
+</body>
+
+</html>
