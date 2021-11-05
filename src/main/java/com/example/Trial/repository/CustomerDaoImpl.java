@@ -93,4 +93,16 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	}
 
+	@Override
+	public Customer getCustomerByEmail(String email) {
+		// TODO Auto-generated method stub
+		
+		String sql = "select * from customer where email = ?";
+		Object[] args = {email};
+		
+		Customer customer = jdbcTemplate.queryForObject(sql, customerRowMapper,args);
+		
+		return customer;
+	}
+
 }

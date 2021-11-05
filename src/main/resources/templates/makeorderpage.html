@@ -50,7 +50,7 @@
             <a class="navbar-brand m-0" th:href="@{https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html}"
                 target="_blank">
                 <img th:src="@{/img/logo-ct.png}" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold" th:text="${currentRequestID}"></span>
+                <span class="ms-1 font-weight-bold" >UI Softboard</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -450,39 +450,36 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Requests in Process</h6>
+                            <h6>Orders in Process</h6>
                         </div>
-                        <div class="card-body px-0 pt-0 pb-2">
+                        <div class="card-body px-5 pt-0 pb-2 mx-5">
                             <div >
-                            		<table id="tabledata">
-                             		<thead>
-                                        <tr>
-                                        	
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody id="input"></tbody>
-                                    <tbody id="template">
-                                        <tr>
-                                            <td>
-                                            	<form th:action="@{/makerequest}" method="post" th:object="${rqdetails}" class="form-horizontal">
-                                            	<input name="requestID" type="number" th:field="*{requestID}" th:value="${currentRequestID}" hidden>
-                                    			<input name="productID" type="number" th:field="*{productID}" />	
-                    							<input name="quantity" type="number" th:field="*{quantity}" />
-                    							<input name="productprice" type="number" th:field="*{productprice}" />
-                    							<select name="agentID" >
-                    								<option value="select" >select </option>
-                    								<option th:each="agent:${allagents}" value="${agent.agentID}"> <span th:text="${agent.agentID}"></span> <span th:text="${agent.firstname}"></span> <span th:text="${agent.lastname}"></span> </option>
-                    							</select>
-                    							<button type="submit"> Add the product</button>
-                           						</form>
-                                                
-                                            </td>
-                                            
-                                        </tr>
-                                     </tbody>
-                                     </table>
-                                     
+                            	
+                            	<table id="tabledata">
+							        <thead>
+							            <th>ProductID</th>
+							            <th>Quantity</th>
+							           
+							            
+							        </thead>
+							        <tbody id="input"></tbody>
+							        <tbody id="template">
+							            <tr>
+							                <td>
+							                <select name="productID" id="productID">
+							                		<option value="0">select</option>
+                    								<option th:each="product:${allProducts}" th:value="${product.productID}"> <span th:text="${product.productID}"></span> <span th:text="${product.productname}"></span> <span th:text="${product.desc}"></span> </option>
+                    								
+                    						</select>
+							                </td>
+							                <td>
+							                    <input name="quantity" type="number" value = "0"/>
+							                </td>
+							                
+							                
+							            </tr>
+							        </tbody>
+    							</table>         
                             </div>
                         </div>
                         
@@ -496,68 +493,7 @@
                 
             </div>
             <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Requests Made</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div >
-                            		<table id="tabledata">
-                             		<thead>
-                                        <tr>
-                                        	
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody id="input1"></tbody>
-                                    <tbody id="template1">
-                                        <tr th:each="rqdetail : ${requestsMade}">
-                                        	<td class="mr-3 pr-5">
-                                            	<span th:text ="${rqdetail.requestDetailsID}"></span>
-                                            </td >
-                                            <td class="mr-3 pr-5">
-                                            	<span th:text ="${rqdetail.productID}"></span>
-                                            </td>
-                                            <td class="mr-3 pr-5">
-                                            	<span th:text ="${rqdetail.quantity}"></span>
-                                            </td>
-                                            <td class="mr-3 pr-5">
-                                            	<span th:text ="${rqdetail.productprice}"></span>
-                                            </td>
-                                            
-                                            <td class="mr-3 pr-5">
-                                            <form th:action="@{/requestdetail/delete}" method="post" id="requestdetailtodelete" th:object="${detailtodelete}">
-                                            	<input th:value="${rqdetail.requestID}" type="hidden" name="requestID" field="*{requestID}"/>
-                                            	<input th:value="${rqdetail.requestDetailsID}" type="hidden" name="requestDetailsID" field="*{requestDetailsID}"/>
-                                            	<button data-toggle="tooltip" data-original-title="Edit user" type="submit">delete</button>
-                                            </form>	
-                                            </td>
-                                            
-                                        </tr>
-                                     </tbody>
-                                     </table>
-                            </div>
-                        </div>
-                        
-                        
-                     						
-						
-                    </div>
-                    <div id="ActionAddRow" class=" btn btn-secondary btn-block">
-                    	<form th:action="@{/confirmrequest}" method="post" id="confirmrequest" >
-                    		<input type="hidden" th:value="${currentRequestID}" name="currentRequestID" />  
-                    		<select ></select>
-                    		<button type="submit"> Confirm request </button> 
-                    	</form> 
-                    </div>
-                    <div id="ActionSubmit" class=" btn btn-secondary btn-block">
-						<form th:action="@{/cancelrequest}" method="post" id="cancelrequest" >
-							<input type="hidden" th:value="${currentRequestID}" name="currentRequestID" />    
-                    		<button> Cancel </button> 
-                    	</form> 		
-					</div>
-                </div>
+                
                 
             </div>
             <!-- <div class="row">
@@ -969,6 +905,9 @@
     		$('#ActionSubmit').on('click', function () {
     		    var data = $('#input tr').map(function () {
     		        var values = {};
+    		        $('select',$(this)).each(function(){
+    		        	values[this.name] = this.value;
+    		        })
     		        $('input', $(this)).each(function () {
     		                values[this.name] = this.value;
     		        });
@@ -978,6 +917,9 @@
     		    
     		    var d1 = $("#template tr").map(function(){
     		         var v = {};
+    		         $('select',$(this)).each(function(){
+     		        	v[this.name] = this.value;
+     		        })
     		         $('input',$(this)).each(function(){
     		             v[this.name] = this.value;
     		         })
@@ -985,12 +927,22 @@
     		     }).get();
         		$.merge(data,d1);
         		console.log(data);
-        		console.log(d1);
+        		//console.log(d1);
+        		
+        		//console.log($.type(data));
         		console.log(JSON.stringify(data));
-        		console.log($.type(data));
-        		console.log($.type(JSON.stringify(data)));
-        		$.post("/confirmrequestdetails",JSON.stringify(data));
+        		$.post('/c/json', {
+    	            json: JSON.stringify(data), 
+    	        }).done(function (response) {
+    	           alert("POST success");
+    	           console.log(response);
+    	           window.location = window.location.protocol + "//" + window.location.host + "/c/successfulorder";
+    	        });
+        		//$.post("/c/json",{json:JSON.stringify(data)}).done();
     		});
+    		
+    		
+    		
        
         // $.post("/confirmrequest", {
         //     json: JSON.stringify(data),
@@ -1005,6 +957,8 @@
         // $.post("/confirmrequest", JSON.stringify(data));
         
     });
+        
+        
 
     </script>
 </body>

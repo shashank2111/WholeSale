@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Trial.model.Customer;
 import com.example.Trial.repository.CustomerDao;
@@ -41,11 +42,20 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional
 	public int deleteCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		int countOfRecord = customerDaoImpl.deleteCustomer(customer);
 		int result = userDaoImpl.deleteUserByCustomer(customer);
 		System.out.println(Integer.toString(countOfRecord) + " records are deleted ");
 		return countOfRecord;
+	}
+
+	@Override
+	public Customer getCustomerByEmail(String email) {
+		// TODO Auto-generated method stub
+		Customer customer = customerDaoImpl.getCustomerByEmail(email);
+		
+		return customer;
 	}
 }

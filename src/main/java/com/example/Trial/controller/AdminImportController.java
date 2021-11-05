@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -40,16 +41,34 @@ public class AdminImportController {
 		return "unfulfilledrequests";
 	}
 	
+	@GetMapping("/makerequest/selectagent")
+	public String handleSelectAgent(Model model) {
+		System.out.println("in handleSelectAgent getmapping");
+		List<Agent> allagents = agentServiceImpl.getAllAgents();
+		model.addAttribute("allagents",allagents);
+		return "selectagent";
+	}
+	
+	@PostMapping("/makerequest/selectagent")
+	public String handleSelectAgent(RedirectAttributes redirectAttributes,Model model,@RequestParam String agentID ) {
+			
+		System.out.println("In handleselect Mapping post");
+		int agentId = Integer.parseInt(agentID);
+		redirectAttributes.addAttribute("agentID",agentId);
+		System.out.println(agentId);
+		return "redirect:/makerequest";
+	}
+	
 	@GetMapping("/makerequest")
-	public String handleMakeRequest(Model model) {
-		
-//		int maxReqeustId = importServiceImpl.getMaxRequestId();
-//		int currentRequestID = maxReqeustId + 1;
-//		int countofRecord = importServiceImpl.createNewRequestWithRequestID(currentRequestID);
+	public String handleMakeRequest(@RequestParam("agentID") String agentID, Model model) {
+		System.out.println("IN handle make request Get");
+		System.out.println(Integer.parseInt(agentID));
+		int agentId = Integer.parseInt(agentID);
+		System.out.println("above is the agentID ");
 		System.out.println("here1");
-		int currentRequestID = requestServiceImpl.createNewRequest();
-		System.out.println("here2");
-//		int currentRequestID = 1;
+		int currentRequestID = requestServiceImpl.createNewRequest(agentId);
+		System.out.println("here2"); 
+
 		model.addAttribute("currentRequestID",currentRequestID);
 		model.addAttribute("rqdetails",new RequestDetails(currentRequestID));
 		
@@ -61,9 +80,8 @@ public class AdminImportController {
 	@PostMapping("/makerequest")
 	public String handleAddButton(@ModelAttribute("rqdetails") RequestDetails rqdetails ,BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes, Model model) {
 		
-//		rqdetails.setRequestID(cur)
+
 		System.out.println(rqdetails.getRequestID());
-//		System.out.println();
 		int countOfRecord = requestDetailsServiceImpl.addRequestDetail(rqdetails);
 		List<RequestDetails> requestsMade =  requestDetailsServiceImpl.findAllDetailswithRequestID(rqdetails.getRequestID());
 		

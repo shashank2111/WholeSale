@@ -12,13 +12,13 @@ public class RequestServiceImpl implements RequestService {
     private RequestDao requestDaoImpl;
 	
 	@Override
-	public int createNewRequest() {
+	public int createNewRequest(int agentID) {
 		// TODO Auto-generated method stub
 		
 //		String sql = "select * from request where requestID = (select MAX(requestID) from request)";
 //		
 //		Request rq = 
-		int currentRequestID = requestDaoImpl.getCurrentRequestID();
+		int currentRequestID = requestDaoImpl.getCurrentRequestID(agentID);
 		
 		return currentRequestID;
 	}

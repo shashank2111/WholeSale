@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="tabledata">
+        <thead>
+            <th>Select</th>
+            <th>Border Location Name</th>
+            <th>Cable Location</th>
+            <th>Direction of Vault Wall</th>
+            
+        </thead>
+        <tbody id="input"></tbody>
+        <tbody id="template">
+            <tr>
+                <td>
+                    <input name="productID" type="number" value = "0"/>
+                </td>
+                <td>
+                    <input name="quantity" type="number" value = "0"/>
+                </td>
+                <td>
+                    <input name="productprice" type="number" value ="0" />
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    <button id="ActionAddRow">Add Row</button>
+    <button id="ActionSubmit">Submit</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+	$(function () {
+	    var addInputRow = function () {
+	        $('#input').append($('#template').html());
+	    };
+	
+	    addInputRow();
+	    $('#ActionAddRow').on('click', addInputRow);
+	    $('#ActionSubmit').on('click', function () {
+	        var data = $('#input tr').map(function () {
+	            var values = {};
+	            $('input', $(this)).each(function () {
+	                if (this.type === 'checkbox') {
+	                    values[this.name] = this.checked;
+	                } else {
+	                    values[this.name] = this.value;
+	                }
+	            });
+	            return values;
+	        }).get();
+	        console.log(data);
+	        
+	       
+	        $.post('/c/json', {
+	            json: JSON.stringify(data), 
+	            delay: 1
+	        }).done(function (response) {
+	            alert("POST success");
+	            console.log(response);
+	        });
+	    });
+	});
+
+    </script>
+
+</body>
+</html>

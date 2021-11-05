@@ -9,5 +9,6 @@ public interface CustomerService {
 	public List<Customer> findAllCustomersByCustomer(Customer customer);
 	public int updateCustomer(Customer customer);
 	public int deleteCustomer(Customer customer);
+	public Customer getCustomerByEmail(String email);
 	
 }

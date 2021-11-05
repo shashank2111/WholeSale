@@ -37,7 +37,7 @@ public class RequestDaoImpl implements RequestDao {
 	
     @Override
     @Transactional
-	public int getCurrentRequestID() {
+	public int getCurrentRequestID(int agentID) {
 		// TODO Auto-generated method stub
     	System.out.println("here");
 		String sql = "select count(*) from request";	
@@ -45,11 +45,11 @@ public class RequestDaoImpl implements RequestDao {
     	System.out.println("count = " + Integer.toString(count));
     	if(count == 0) {
     		
-    		String sql1 = "Insert into request(requestId,requestdate,isinprocess,isfulfilled) values (?,?,?,?)";
+    		String sql1 = "Insert into request(requestId,requestdate,isinprocess,isfulfilled,agentID) values (?,?,?,?,?)";
     		Date date = Calendar.getInstance().getTime();  
     		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
     		String strDate = dateFormat.format(date);
-    		Object[] args = {1,strDate,false,false};
+    		Object[] args = {1,strDate,false,false,agentID};
     		jdbcTemplate.update(sql1,args);
     		return 1;
     	}
@@ -59,11 +59,11 @@ public class RequestDaoImpl implements RequestDao {
 		int maxId = rq.getRequestID();
 		
 		
-		String sql1 = "Insert into request(requestId,requestdate,isinprocess,isfulfilled) values(?,?,?,?)";
+		String sql1 = "Insert into request(requestId,requestdate,isinprocess,isfulfilled,agentID) values(?,?,?,?,?)";
 		Date date = Calendar.getInstance().getTime();  
 		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
 		String strDate = dateFormat.format(date);
-		Object[] args = {maxId+1,strDate,false,false};
+		Object[] args = {maxId+1,strDate,false,false,agentID};
 		jdbcTemplate.update(sql1,args);
 		
 		return maxId + 1;

@@ -1,19 +1,18 @@
 package com.example.Trial.model;
 
-import java.util.Date;
-
 public class Order {
 	private int orderID;
-	private Date orderdate;
-	private String orderIsPending;
-	private String totalamount;
+	private String orderdate;
+	private boolean orderIsPending;
+	private int totalamount;
 	private int customerID;
 	private int employeeID;
 	public Order() {
 		super();
 	}
 	
-	public Order(Date orderdate, String orderIsPending, String totalamount, int customerID, int employeeID) {
+	
+	public Order(String orderdate, boolean orderIsPending, int totalamount, int customerID, int employeeID) {
 		super();
 		this.orderdate = orderdate;
 		this.orderIsPending = orderIsPending;
@@ -22,30 +21,43 @@ public class Order {
 		this.employeeID = employeeID;
 	}
 
+
 	public int getOrderID() {
 		return orderID;
 	}
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
-	public Date getOrderdate() {
+	
+	public String getOrderdate() {
 		return orderdate;
 	}
-	public void setOrderdate(Date orderdate) {
+
+	public void setOrderdate(String orderdate) {
 		this.orderdate = orderdate;
 	}
-	public String getOrderIsPending() {
+
+	
+	public boolean isOrderIsPending() {
 		return orderIsPending;
 	}
-	public void setOrderIsPending(String orderIsPending) {
+
+
+	public void setOrderIsPending(boolean orderIsPending) {
 		this.orderIsPending = orderIsPending;
 	}
-	public String getTotalamount() {
+
+
+	public int getTotalamount() {
 		return totalamount;
 	}
-	public void setTotalamount(String totalamount) {
+
+
+	public void setTotalamount(int totalamount) {
 		this.totalamount = totalamount;
 	}
+
+
 	public int getCustomerID() {
 		return customerID;
 	}

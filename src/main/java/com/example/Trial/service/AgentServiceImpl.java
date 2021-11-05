@@ -20,6 +20,9 @@ public class AgentServiceImpl implements AgentService {
 	@Autowired
 	private UserDao userDaoImpl;
 	
+	@Autowired
+	private EmailSenderService service;
+		
 	@Override
 	@Transactional
 	public int addAgent(Agent agent) {
@@ -29,6 +32,9 @@ public class AgentServiceImpl implements AgentService {
 		int result = userDaoImpl.saveUserByAgent(agent);
 		
 		System.out.println("Here the agent ID is "+ Integer.toString(agentId));
+		
+		service.sendEmail(agent);
+		
 		return agentId;
 		
 	}

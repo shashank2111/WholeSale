@@ -16,12 +16,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Trial.model.Agent;
 import com.example.Trial.service.AgentService;
+import com.example.Trial.service.EmailSenderService;
 
 @Controller
 public class AdminAgentController {
 	
 	@Autowired
 	private AgentService agentServiceImpl;
+	
+	
 	
 //	@GetMapping("/agent")
 //	public String handleAgents(Model model) {
@@ -31,7 +34,7 @@ public class AdminAgentController {
 //	}
 	
 	@GetMapping("/agent")
-	public String handleManageCustomer(Principal principal,Model model) {
+	public String handleManageAgent(Principal principal,Model model) {
 		model.addAttribute("message","You are in managecustomer");
 		model.addAttribute("email",principal.getName());
 //		System.out.println(redirectAttributes.getAttribute("customers"));
@@ -49,6 +52,9 @@ public class AdminAgentController {
 //		model.addAttribute("successmessage","The customer has been registered successfully");
 		model.addAttribute("success",true);
 		model.addAttribute("agentID",agentID);
+		
+		
+		
 		return "agentmanagement";
 		
 	}	
