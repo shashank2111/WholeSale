@@ -24,7 +24,8 @@ public class AdminAgentController {
 	@Autowired
 	private AgentService agentServiceImpl;
 	
-	
+	@Autowired
+	private EmailSenderService emailService;
 	
 //	@GetMapping("/agent")
 //	public String handleAgents(Model model) {
@@ -53,7 +54,7 @@ public class AdminAgentController {
 		model.addAttribute("success",true);
 		model.addAttribute("agentID",agentID);
 		
-		
+		emailService.sendEmail(agent);
 		
 		return "agentmanagement";
 		
@@ -86,6 +87,9 @@ public class AdminAgentController {
 		model.addAttribute("useremail",principal.getName()); 
 		model.addAttribute("originalagent",agent);
 		System.out.println(agent.toString());
+		
+		emailService.sendAgentDataEdit(agent);
+		
 		return "agentedit";
 	}
 	

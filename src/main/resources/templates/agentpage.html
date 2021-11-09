@@ -19,8 +19,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/apple-icon.png}">
+    <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
     <title>
         Soft UI Dashboard by Creative Tim
     </title>
@@ -106,7 +106,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " th:href="@{/makerequest/selectagent}">
+                    <a class="nav-link" th:href="@{/a/agent/allmyexports/__${agentID}__}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -129,11 +129,11 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1" >Make an import request</span>
+                        <span class="nav-link-text ms-1" >See my all exports </span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " th:href="@{/import/allimports}">
+                    <a class="nav-link  " th:href="@{/virtual-reality.html}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -159,7 +159,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">See all our imports </span>
+                        <span class="nav-link-text ms-1">ghghghghgh</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -321,7 +321,7 @@
                         </li>
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
                     </ol>
-                    <h6 class="font-weight-bolder mb-0">Tables</h6>
+                    <h6 class="font-weight-bolder mb-0">MY Orders</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -335,7 +335,7 @@
                         <li class="nav-item d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
+                                <span class="d-sm-inline d-none" th:text="${email}"></span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -445,7 +445,7 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Requests in Process</h6>
+                            <h6>Requests to be Handled </h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -460,41 +460,56 @@
                                                 RequestDate</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Request Shipped</th>
+                                                IsInProcess</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Total Amount</th>
+                                                IsFulfilled</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                TotalAmount</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                </th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each = "requestnotshipped : ${requestsnotshipped}">
+                                    	<tr th:each="requesttome : ${PendingRequeststome}">
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    
+                                                    <div>
+                                                        <img th:src="@{/img/team-2.jpg}"
+                                                            class="avatar avatar-sm me-3" alt="user1">
+                                                    </div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"  th:text="${requestnotshipped.requestID}"></h6>
-                                                        <p class="text-xs text-secondary mb-0"></p>
+                                                        <h6 class="mb-0 text-sm"  > <span th:text="${requesttome.requestID}"></span> </h6>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0" th:text="${requestnotshipped.requestdate}"></p>
+                                                <p class="text-xs font-weight-bold mb-0" th:text="${requesttome.requestdate}"></p>
                                                 <p class="text-xs text-secondary mb-0">Organization</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success" th:text="${requestnotshipped.isinprocess}"></span>
+                                            <a th:href="@{/a/agent/handlerequest/__${requesttome.requestID}__}"><span class="badge badge-sm bg-gradient-success" th:text="${requesttome.isinprocess}"></span></a>
+                                                
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="badge badge-sm bg-gradient-success" th:text="${requesttome.isfulfilled}"></span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold" th:text="${requestnotshipped.totalamount}"></span>
+                                                <span class="text-secondary text-xs font-weight-bold" th:text="${requesttome.totalamount}"></span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs"
+                                                <a th:href="@{/a/agent/showdetails/__${requesttome.requestID}__}" class="text-secondary font-weight-bold text-xs"
                                                     data-toggle="tooltip" data-original-title="Edit user">
-                                                    Show Details
+                                                    <button style="border:none">show details</button>
                                                 </a>
-                                            </td>
+                                            </td> 
                                         </tr>
+                                    	
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -502,11 +517,12 @@
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Shipped but not received yet</h6>
+                            <h6>Shipped but yet to receive requests </h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -521,43 +537,52 @@
                                                 RequestDate</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Request Received</th>
+                                                IsInProcess</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Total Amount</th>
+                                                IsFulfilled</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                TotalAmount</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                </th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each = "requestshippednotreceived : ${requestsshippednotreceived}">
+                                    	<tr th:each="fullfilledbyme : ${unFulfilledRequestsbyme}">
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    
+                                                    <div>
+                                                        <img th:src="@{/img/team-2.jpg}"
+                                                            class="avatar avatar-sm me-3" alt="user1">
+                                                    </div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"  th:text="${requestshippednotreceived.requestID}"></h6>
-                                                        <p class="text-xs text-secondary mb-0"></p>
+                                                        <h6 class="mb-0 text-sm"  > <span th:text="${fullfilledbyme.requestID}"></span> </h6>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0" th:text="${requestshippednotreceived.requestdate}"></p>
+                                                <p class="text-xs font-weight-bold mb-0" th:text="${fullfilledbyme.requestdate}"></p>
                                                 <p class="text-xs text-secondary mb-0">Organization</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                            <a th:href="@{/import/receiverequest/__${requestshippednotreceived.requestID}__}">
-                                                <span class="badge badge-sm bg-gradient-success" th:text="${requestshippednotreceived.isfulfilled}"></span>
-                                            </a>    
+                                                <span class="badge badge-sm bg-gradient-success" th:text="${fullfilledbyme.isinprocess}"></span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold" th:text="${requestshippednotreceived.totalamount}"></span>
+                                                <span class="text-secondary text-xs font-weight-bold" th:text="${fullfilledbyme.isfulfilled}"></span>
                                             </td>
-                                            <td class="align-middle">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Show Details
-                                                </a>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold" th:text="${fullfilledbyme.totalamount}"></span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-xs font-weight-bold" th:text="${fullfilledbyme.totalamount}"></span>
                                             </td>
                                         </tr>
+                                    	
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -727,7 +752,8 @@
                                                         <div class="progress">
                                                             <div class="progress-bar bg-gradient-success"
                                                                 role="progressbar" aria-valuenow="0" aria-valuemin="0"
-                                                                aria-valuemax="0" style="width: 0%;"></div>
+                                                                aria-valuemax="0" style="width: 0%;">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

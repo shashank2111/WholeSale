@@ -1,20 +1,39 @@
 package com.example.Trial.repository;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.Trial.model.OrderDetails;
+import com.example.Trial.model.OrderDetailsView;
 
 @Repository
 public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	private RowMapper<OrderDetailsView> ordersDetailsViewRowMapper = new RowMapper<OrderDetailsView>() {
+        @Override
+        public OrderDetailsView mapRow(ResultSet resultSet, int i) throws SQLException {
+        	OrderDetailsView orderDetailsView = new OrderDetailsView();
+        	orderDetailsView.setOrderID(resultSet.getInt("orderID"));
+        	orderDetailsView.setOrderdetailsID(resultSet.getInt("orderdetailsID"));
+        	orderDetailsView.setProductID(resultSet.getInt("productID"));
+        	orderDetailsView.setProduct(resultSet.getString("product"));
+        	orderDetailsView.setQuantity(resultSet.getInt("quantity"));
+        	orderDetailsView.setProductprice(resultSet.getInt("productprice"));
+        	orderDetailsView.setAmount(resultSet.getInt("amount"));
+            return orderDetailsView;
+        }
+    };
 	
 	@Override
 	public int insertOrderDetails(OrderDetails[] ods,int currentOrderID) {
@@ -45,6 +64,18 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 		});
 		
 		return 0;
+	}
+
+	@Override
+	public List<OrderDetailsView> getOrderDetailsViewbyOrderID(int orderID) {
+		// TODO Auto-generated method stub
+		
+		String sql = "Select * from orderdetailsView where orderID = ?";
+		Object[] args = {orderID};
+		
+		List<OrderDetailsView> allOrderswithID = jdbcTemplate.query(sql,ordersDetailsViewRowMapper,args);
+		
+		return allOrderswithID;
 	}
 
 }

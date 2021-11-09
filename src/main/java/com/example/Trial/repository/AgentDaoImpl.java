@@ -91,4 +91,16 @@ public class AgentDaoImpl implements AgentDao {
 		return allAgents;
 	}
 
+	@Override
+	public Agent getAgentByEmail(String email) {
+		// TODO Auto-generated method stub
+		
+		String sql = "Select * from agent where email = ?";
+		Object[] args = {email};
+		
+		Agent agent = jdbcTemplate.queryForObject(sql, agentRowMapper,args);
+		
+		return agent;
+	}
+
 }

@@ -10,4 +10,6 @@ public interface AgentService {
 	public int updateAgent(Agent agent);
 	public int deleteAgent(Agent agent);
 	public List<Agent> getAllAgents();
+	
+	public Agent getAgentByEmail(String email);
 }

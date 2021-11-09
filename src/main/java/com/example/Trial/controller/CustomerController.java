@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Trial.model.Customer;
+import com.example.Trial.model.Order;
 import com.example.Trial.model.OrderDetails;
 import com.example.Trial.model.OrderDetailsEditor;
 import com.example.Trial.model.OrderDetailsWrapper;
 import com.example.Trial.model.Product;
 import com.example.Trial.service.CustomerService;
+import com.example.Trial.service.EmailSenderService;
 import com.example.Trial.service.OrderDetailsService;
 import com.example.Trial.service.OrderService;
 import com.example.Trial.service.ProductService;
@@ -43,6 +45,9 @@ public class CustomerController {
 	@Autowired
 	private ProductService productServiceImpl;
 	
+	@Autowired
+	private EmailSenderService service;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(OrderDetailsWrapper.class, new OrderDetailsEditor(objectMapper));
@@ -51,6 +56,24 @@ public class CustomerController {
 	@GetMapping("/c/customer")
 	public String handleCustomerEntrance(Principal principal,Model model) {
 		model.addAttribute("email", principal.getName());	
+		
+		Customer customer = customerServiceImpl.getCustomerByEmail(principal.getName());
+		int customerID = customer.getCustomerID();
+		System.out.println("customer Id is ");
+		System.out.println(customerID);
+		List<Order> myPendingOrders = orderServiceImpl.getMyPendingOrders(customerID);
+		List<Order> myFulfilledOrders = orderServiceImpl.getMyFulfilledOrders(customerID);
+		model.addAttribute("myPendingOrders",myPendingOrders);
+		for(Order o:myPendingOrders) {
+			System.out.println(o.getOrderID());
+			System.out.println(o.getOrderdate());
+			System.out.println("\n");
+		}
+		
+		model.addAttribute("myFulfilledOrders",myFulfilledOrders);
+		for(Order od:myFulfilledOrders) {
+			System.out.println(od.getOrderID());
+		}
 		return "customerpage";
 	}
 	
@@ -88,6 +111,8 @@ public class CustomerController {
 		
 		int countOfRecord=  orderDetailsServiceImpl.insertOrderDetails(ods,currentOrderID);
 		
+		service.sendOrderSuccessEmail(customer);
+		
 //		model.addAttribute("currentOrderID",currentRequestID);
 //		model.addAttribute("orderdetails",/);
 		
@@ -106,9 +131,25 @@ public class CustomerController {
 	
 	@GetMapping("/c/successfulorder")
 	public String handleSuccessfulOrder(Model model,Principal principal) {
-		
+		 
 		return "successfulorderpage";
 	}
-	
+
+	@PostMapping("/c/customer/delete")
+	public String handleDeleteOrder(@RequestParam int orderID,Model model,Principal principal) {
+		
+//		orderDetailsServiceImpl.deleteOrderDetailswithOrderIDbySetcancelTrue(orderID);
+		
+		orderServiceImpl.cancelOrderwithOrderID(orderID);
+//					iscancelled => true;
+//					
+//		service.sendOrderDeletionEmail(,orderID);
+		
+		
+		
+		return "redirect:/c/customer";
+		
+		
+	}
 	
 }

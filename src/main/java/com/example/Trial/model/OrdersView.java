@@ -1,6 +1,6 @@
 package com.example.Trial.model;
 
-public class Order {
+public class OrdersView {
 	private int orderID;
 	private String orderdate;
 	private boolean orderIsPending;
@@ -9,14 +9,15 @@ public class Order {
 	private int employeeID;
 	private boolean iscancelled;
 	private boolean ishandled;
-	public Order() {
+	private String customeremail;
+	public OrdersView() {
 		super();
 	}
 	
-	
-	public Order(String orderdate, boolean orderIsPending, int totalamount, int customerID, int employeeID,
-			boolean iscancelled, boolean ishandled) {
+	public OrdersView(int orderID, String orderdate, boolean orderIsPending, int totalamount, int customerID,
+			int employeeID, boolean iscancelled, boolean ishandled, String customeremail) {
 		super();
+		this.orderID = orderID;
 		this.orderdate = orderdate;
 		this.orderIsPending = orderIsPending;
 		this.totalamount = totalamount;
@@ -24,8 +25,8 @@ public class Order {
 		this.employeeID = employeeID;
 		this.iscancelled = iscancelled;
 		this.ishandled = ishandled;
+		this.customeremail = customeremail;
 	}
-
 
 	public int getOrderID() {
 		return orderID;
@@ -33,44 +34,24 @@ public class Order {
 	public void setOrderID(int orderID) {
 		this.orderID = orderID;
 	}
-	
 	public String getOrderdate() {
 		return orderdate;
 	}
-
 	public void setOrderdate(String orderdate) {
 		this.orderdate = orderdate;
 	}
-
-	
 	public boolean isOrderIsPending() {
 		return orderIsPending;
 	}
-
-
 	public void setOrderIsPending(boolean orderIsPending) {
 		this.orderIsPending = orderIsPending;
 	}
-
-
 	public int getTotalamount() {
 		return totalamount;
 	}
-
-
-	public boolean isIscancelled() {
-		return iscancelled;
-	}
-
-	public void setIscancelled(boolean iscancelled) {
-		this.iscancelled = iscancelled;
-	}
-
 	public void setTotalamount(int totalamount) {
 		this.totalamount = totalamount;
 	}
-
-
 	public int getCustomerID() {
 		return customerID;
 	}
@@ -83,16 +64,30 @@ public class Order {
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
 	}
+	public String getCustomeremail() {
+		return customeremail;
+	}
+	public void setCustomeremail(String customeremail) {
+		this.customeremail = customeremail;
+	}
 
+	public boolean isIscancelled() {
+		return iscancelled;
+	}
+
+	public void setIscancelled(boolean iscancelled) {
+		this.iscancelled = iscancelled;
+	}
 
 	public boolean isIshandled() {
 		return ishandled;
 	}
 
-
 	public void setIshandled(boolean ishandled) {
 		this.ishandled = ishandled;
 	}
+	
+	
 	
 	
 }

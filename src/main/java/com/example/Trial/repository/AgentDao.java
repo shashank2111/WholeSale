@@ -12,4 +12,6 @@ public interface AgentDao {
 	public int deleteAgent(Agent agent);
 	public List<Agent> getAllAgents();
 	
+	public Agent getAgentByEmail(String email);
+	
 }

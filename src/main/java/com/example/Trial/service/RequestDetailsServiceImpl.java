@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Trial.model.RequestDetails;
+import com.example.Trial.model.RequestDetailsView;
 import com.example.Trial.repository.RequestDetailsDao;
 
 @Service
@@ -44,6 +45,15 @@ public class RequestDetailsServiceImpl implements RequestDetailsService {
 		// TODO Auto-generated method stub
 		int countOfRecord = requestDetailsDaoImpl.deleteAllDetailswithRequestID(currentrequestID);
 		return countOfRecord;
+	}
+
+	@Override
+	public List<RequestDetailsView> getAllRequestDetailsViewwithRequestID(int requestID) {
+		// TODO Auto-generated method stub
+		
+		List<RequestDetailsView> allRequestDetailsViewwithRequestID = requestDetailsDaoImpl.getAllRequestDetailsViewwithRequestID(requestID);
+		
+		return allRequestDetailsViewwithRequestID;
 	}
 
 }

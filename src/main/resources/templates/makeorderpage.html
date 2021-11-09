@@ -134,7 +134,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1" >Make an import request</span>
+                        <span class="nav-link-text ms-1" >Make an Order</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -467,7 +467,7 @@
 							            <tr>
 							                <td>
 							                <select name="productID" id="productID">
-							                		<option value="0">select</option>
+							                		<option id="selectoption" value="0">Click Add row to add another items</option>
                     								<option th:each="product:${allProducts}" th:value="${product.productID}"> <span th:text="${product.productID}"></span> <span th:text="${product.productname}"></span> <span th:text="${product.desc}"></span> </option>
                     								
                     						</select>
@@ -896,10 +896,11 @@
         $(function () {
     		var addInputRow = function () {
     			console.log("here");
+    			
         		$('#input').append($('#template').html());
     		};
 
-    		addInputRow();
+    		//addInputRow();
     		$('#ActionAddRow').on('click', addInputRow);
     
     		$('#ActionSubmit').on('click', function () {

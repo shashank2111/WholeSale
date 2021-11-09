@@ -72,4 +72,13 @@ public class AgentServiceImpl implements AgentService {
 		return allAgents;
 	}
 
+	@Override
+	public Agent getAgentByEmail(String email) {
+		// TODO Auto-generated method stub
+		
+		Agent agent = agentDaoImpl.getAgentByEmail(email);
+		
+		return agent;
+	}
+
 }

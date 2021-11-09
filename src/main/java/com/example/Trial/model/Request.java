@@ -7,11 +7,13 @@ public class Request {
 	private boolean isfulfilled;
 	private int employeeID;
 	private int agentID;
+	private int totalamount;
 	public Request() {
 		super();
 	}
+	
 	public Request(int requestID, String requestdate, boolean isinprocess, boolean isfulfilled, int employeeID,
-			int agentID) {
+			int agentID, int totalamount) {
 		super();
 		this.requestID = requestID;
 		this.requestdate = requestdate;
@@ -19,7 +21,9 @@ public class Request {
 		this.isfulfilled = isfulfilled;
 		this.employeeID = employeeID;
 		this.agentID = agentID;
+		this.totalamount = totalamount;
 	}
+
 	public int getRequestID() {
 		return requestID;
 	}
@@ -56,6 +60,14 @@ public class Request {
 	}
 	public void setAgentID(int agentID) {
 		this.agentID = agentID;
+	}
+
+	public int getTotalamount() {
+		return totalamount;
+	}
+
+	public void setTotalamount(int totalamount) {
+		this.totalamount = totalamount;
 	}
 	
 	

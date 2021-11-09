@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,6 +32,7 @@ public class RequestDaoImpl implements RequestDao {
         	request.setIsfulfilled(resultSet.getBoolean("isfulfilled"));
         	request.setEmployeeID(resultSet.getInt("employeeID"));
         	request.setAgentID(resultSet.getInt("agentID"));
+        	request.setTotalamount(resultSet.getInt("totalamount"));
             return request;
         }
     };
@@ -80,7 +82,97 @@ public class RequestDaoImpl implements RequestDao {
 		
 		return countOfRecord;
 	}
-    
+
+	@Override
+	public List<Request> getPendingRequeststome(int agentID) {
+		// TODO Auto-generated method stub
+		String sql ="Select * from request where agentID = ? and isinprocess = ?";
+		Object[] args = {agentID,false};
+		
+		List<Request> PendingRequeststome = jdbcTemplate.query(sql,requestRowMapper,args);
+		
+		
+		return PendingRequeststome;
+	}
+
+	@Override
+	public List<Request> getunFulfilledRequestsbyme(int agentID) {
+		// TODO Auto-generated method stub
+		String sql ="select * from request where agentID = ? and  isinprocess = ? and isfulfilled = ?";
+		Object[] args = {agentID, true , false};
+		
+		List<Request> unfulfilledRequestbyme = jdbcTemplate.query(sql,requestRowMapper,args);
+		
+		return unfulfilledRequestbyme;
+	}
+
+	@Override
+	public int makeisinprocesstrue(int requestID) {
+		// TODO Auto-generated method stub
+		
+		String sql ="update request set isinprocess = ? where requestID = ?";
+		Object[] args = {true,requestID};
+		
+		int countOfRecord = jdbcTemplate.update(sql,args);
+		
+		return countOfRecord;
+	}
+
+	@Override
+	public List<Request> getAllRequestsisinprocessfalse() {
+		// TODO Auto-generated method stub
+		String sql ="select * from request where isinprocess = ?";
+		Object[] args = {false};
+		
+		List<Request> requestsnotshipped = jdbcTemplate.query(sql,requestRowMapper,args);
+		
+		return requestsnotshipped;
+	}
+
+	@Override
+	public List<Request> getAllRequestsisinprocesstrueisfulfilledfalse() {
+		// TODO Auto-generated method stub
+		String sql ="select * from request where isinprocess = ?  and isfulfilled = ?";
+		Object[] args = {true,false};
+		
+		List<Request> requestsshippednotreceived = jdbcTemplate.query(sql, requestRowMapper,args);
+		
+		return requestsshippednotreceived;
+	}
+
+	@Override
+	public int receiveImportsetisfulfilledtrue(int requestID) {
+		// TODO Auto-generated method stub
+		
+		String sql="update request set isfulfilled = ? where requestId = ?";
+		Object[] args = {true,requestID};
+		
+		int countOfRecord = jdbcTemplate.update(sql,args);
+		
+		return countOfRecord;
+	}
+
+	@Override
+	public List<Request> getAllMyExports(int agentID) {
+		// TODO Auto-generated method stub
+		
+		String sql = "select * from request where agentID = ?";
+		Object[] args = {agentID};
+		
+		List<Request> allMyExports = jdbcTemplate.query(sql,requestRowMapper,args);
+		
+		return allMyExports;
+	}
+
+	@Override
+	public List<Request> getAllImports() {
+		// TODO Auto-generated method stub
+		String sql = "select * from request";
+		List<Request> allImports = jdbcTemplate.query(sql, requestRowMapper);
+		return allImports;
+	}
+
+
     
 
 }

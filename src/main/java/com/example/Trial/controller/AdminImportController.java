@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Trial.model.Agent;
+import com.example.Trial.model.Request;
 import com.example.Trial.model.RequestDetails;
 import com.example.Trial.service.AgentService;
 import com.example.Trial.service.RequestDetailsService;
@@ -36,9 +37,35 @@ public class AdminImportController {
 	@GetMapping("/import")
 	public String handleManageImport(Principal principal,Model model) {
 //		model.addAttribute("message","You are in managecustomer");
-//		model.addAttribute("email",principal.getName());
+		model.addAttribute("email",principal.getName());
 //		return "importmanagement";
+		
+		List<Request> Requestsnotshipped = requestServiceImpl.getAllRequestsisinprocessfalse();
+		
+		List<Request> Requestsshippednotreceived = requestServiceImpl.getAllRequestsisinprocesstrueisfulfilledfalse();
+		
+		model.addAttribute("requestsnotshipped", Requestsnotshipped);
+		model.addAttribute("requestsshippednotreceived", Requestsshippednotreceived);
+		
 		return "unfulfilledrequests";
+	}
+	
+	@GetMapping("/import/allimports")
+	public String handleAllImports(Principal principal,Model model) {
+		
+		List<Request> allImports = requestServiceImpl.getAllImports();
+		model.addAttribute("allImports", allImports); 
+		
+		return "allimports";
+		
+	}
+	
+	@GetMapping("/import/receiverequest/{requestID}")
+	public String handleReceiveImport(@PathVariable("requestID") int requestID , Principal principal , Model model) {
+		
+		int countOfRecord = requestServiceImpl.receiveImportsetisfulfilledtrue(requestID);
+		
+		return "redirect:/import";
 	}
 	
 	@GetMapping("/makerequest/selectagent")

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Trial.model.Customer;
 import com.example.Trial.service.CustomerService;
+import com.example.Trial.service.EmailSenderService;
 
 @Controller
 public class AdminCustomerController {
@@ -23,6 +24,8 @@ public class AdminCustomerController {
 	@Autowired
 	private CustomerService customerServiceImpl;
 	
+	@Autowired
+	private EmailSenderService emailService;
 	
 	@GetMapping("/customer")
 	public String handleManageCustomer(Principal principal,Model model) {
@@ -43,6 +46,8 @@ public class AdminCustomerController {
 //		model.addAttribute("successmessage","The customer has been registered successfully");
 		model.addAttribute("success",true);
 		model.addAttribute("customerID",customerID);
+		
+		emailService.sendCustomerRegistraionSuccessEmail(customer);
 		return "customermanagement";
 		
 	}	

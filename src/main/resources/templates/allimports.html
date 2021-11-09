@@ -133,7 +133,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  " th:href="@{/import/allimports}">
+                    <a class="nav-link  " th:href="@{/virtual-reality.html}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1"
@@ -159,7 +159,7 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">See all our imports </span>
+                        <span class="nav-link-text ms-1">ghghghghgh</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -445,7 +445,7 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Requests in Process</h6>
+                            <h6>All Our Imports</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -460,41 +460,56 @@
                                                 RequestDate</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Request Shipped</th>
+                                                IsInProcess</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Total Amount</th>
+                                                IsFulfilled</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                TotalAmount</th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                </th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each = "requestnotshipped : ${requestsnotshipped}">
+                                    	<tr th:each="import : ${allImports}">
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    
+                                                    <div>
+                                                        <img th:src="@{/img/team-2.jpg}"
+                                                            class="avatar avatar-sm me-3" alt="user1">
+                                                    </div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"  th:text="${requestnotshipped.requestID}"></h6>
-                                                        <p class="text-xs text-secondary mb-0"></p>
+                                                        <h6 class="mb-0 text-sm"  > <span th:text="${import.requestID}"></span> </h6>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0" th:text="${requestnotshipped.requestdate}"></p>
+                                                <p class="text-xs font-weight-bold mb-0" th:text="${import.requestdate}"></p>
                                                 <p class="text-xs text-secondary mb-0">Organization</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success" th:text="${requestnotshipped.isinprocess}"></span>
+                                            <a href="#"><span class="badge badge-sm bg-gradient-success" th:text="${import.isinprocess}"></span></a>
+                                                
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="badge badge-sm bg-gradient-success" th:text="${import.isfulfilled}"></span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold" th:text="${requestnotshipped.totalamount}"></span>
+                                                <span class="text-secondary text-xs font-weight-bold" th:text="${import.totalamount}"></span>
                                             </td>
                                             <td class="align-middle">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs"
+                                                <a th:href="@{/a/agent/showdetails/__${import.requestID}__}" class="text-secondary font-weight-bold text-xs"
                                                     data-toggle="tooltip" data-original-title="Edit user">
-                                                    Show Details
+                                                    <button style="border:none">show details</button>
                                                 </a>
-                                            </td>
+                                            </td> 
                                         </tr>
+                                    	
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -502,69 +517,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Shipped but not received yet</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                RequestID</th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                RequestDate</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Request Received</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Total Amount</th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each = "requestshippednotreceived : ${requestsshippednotreceived}">
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"  th:text="${requestshippednotreceived.requestID}"></h6>
-                                                        <p class="text-xs text-secondary mb-0"></p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0" th:text="${requestshippednotreceived.requestdate}"></p>
-                                                <p class="text-xs text-secondary mb-0">Organization</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                            <a th:href="@{/import/receiverequest/__${requestshippednotreceived.requestID}__}">
-                                                <span class="badge badge-sm bg-gradient-success" th:text="${requestshippednotreceived.isfulfilled}"></span>
-                                            </a>    
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold" th:text="${requestshippednotreceived.totalamount}"></span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="#" class="text-secondary font-weight-bold text-xs"
-                                                    data-toggle="tooltip" data-original-title="Edit user">
-                                                    Show Details
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <!-- <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">

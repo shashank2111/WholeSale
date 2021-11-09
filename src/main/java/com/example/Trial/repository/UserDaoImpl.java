@@ -110,7 +110,8 @@ public class UserDaoImpl implements UserDao {
 	public int saveUserByAgent(Agent agent) {
 		// TODO Auto-generated method stub
 		String sql = "Insert into user(email,password,roletitle) values(?,?,?)";
-		Object[] args = {agent.getEmail(),agent.getPassword(),"agent"};
+		String pass = this.bCryptPasswordEncoder.encode(agent.getPassword());
+		Object[] args = {agent.getEmail(),pass,"agent"};
 		return jdbcTemplate.update(sql,args);
 		
 //		return 0;
