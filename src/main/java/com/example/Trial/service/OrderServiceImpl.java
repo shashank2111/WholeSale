@@ -78,6 +78,14 @@ public class OrderServiceImpl implements OrderService {
 		int countOfRecord = orderDaoImpl.makePendingOrderFalsewithOrderID(orderID);
 		return countOfRecord;
 	}
+
+	@Override
+	public int setTotalamountOfOrderID(int currentOrderID, int totalamount) {
+		// TODO Auto-generated method stub
+		int countOfRecord = orderDaoImpl.setTotalamountOfOrderID(currentOrderID,totalamount);
+		
+		return 0;
+	}
 	
 	
 

@@ -10,5 +10,6 @@ public interface CustomerService {
 	public int updateCustomer(Customer customer);
 	public int deleteCustomer(Customer customer);
 	public Customer getCustomerByEmail(String email);
+	public List<Customer> getAllCustomers();
 	
 }

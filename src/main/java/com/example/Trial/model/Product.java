@@ -5,21 +5,26 @@ public class Product {
 	private int productID;
 	private String productname;
 	private String desc;
+	private int costprice;
 	private int sellprice;
 	private String brand;
 	private int categoryID;
 	public Product() {
 		super();
 	}
-	public Product(int productID, String productname, String desc, int sellprice, String brand, int categoryID) {
+	
+	public Product(int productID, String productname, String desc, int costprice, int sellprice, String brand,
+			int categoryID) {
 		super();
 		this.productID = productID;
 		this.productname = productname;
 		this.desc = desc;
+		this.costprice = costprice;
 		this.sellprice = sellprice;
 		this.brand = brand;
 		this.categoryID = categoryID;
 	}
+
 	public int getProductID() {
 		return productID;
 	}
@@ -55,6 +60,14 @@ public class Product {
 	}
 	public void setCategoryID(int categoryID) {
 		this.categoryID = categoryID;
+	}
+
+	public int getCostprice() {
+		return costprice;
+	}
+
+	public void setCostprice(int costprice) {
+		this.costprice = costprice;
 	}
 	
 	

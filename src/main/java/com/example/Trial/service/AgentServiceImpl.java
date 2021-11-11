@@ -81,4 +81,13 @@ public class AgentServiceImpl implements AgentService {
 		return agent;
 	}
 
+	@Override
+	public Agent getAgentByAgentID(int agentID) {
+		// TODO Auto-generated method stub
+		
+		Agent agent = agentDaoImpl.getAgentByAgentID(agentID);
+		
+		return agent;
+	}
+
 }

@@ -102,6 +102,24 @@ public class RequestServiceImpl implements RequestService {
 		return allImports;
 	}
 
+	@Override
+	public int getAgentUsingRequestId(int currentRequestID) {
+		// TODO Auto-generated method stub
+		
+		int agentId = requestDaoImpl.getAgentUsingRequestId(currentRequestID);
+		
+		return agentId;
+	}
+
+	@Override
+	public int setRequestTotalamount(int currentrequestID, int totalamount) {
+		// TODO Auto-generated method stub
+		
+		int countOfRecord = requestDaoImpl.setRequestTotalamount(currentrequestID,totalamount);
+		
+		return 0;
+	}
+
 	
 
 	

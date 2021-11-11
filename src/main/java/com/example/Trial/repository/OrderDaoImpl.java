@@ -191,4 +191,16 @@ public class OrderDaoImpl implements OrderDao {
 		return countOfRecord;
 	}
 
+
+	@Override
+	public int setTotalamountOfOrderID(int currentOrderID, int totalamount) {
+		// TODO Auto-generated method stub
+		
+		String sql = "Update orders set totalamount = ? where orderID = ?";
+		Object[] args = {totalamount , currentOrderID};
+		
+		int countOfRecord = jdbcTemplate.update(sql,args);
+		return countOfRecord;
+	}
+
 }

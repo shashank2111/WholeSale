@@ -19,9 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.Trial.model.Agent;
 import com.example.Trial.model.Request;
 import com.example.Trial.model.RequestDetails;
+import com.example.Trial.model.RequestDetailsView;
+import com.example.Trial.model.SupplyView;
 import com.example.Trial.service.AgentService;
+import com.example.Trial.service.EmailSenderService;
 import com.example.Trial.service.RequestDetailsService;
 import com.example.Trial.service.RequestService;
+import com.example.Trial.service.SupplyService;
 
 	
 @Controller
@@ -33,6 +37,12 @@ public class AdminImportController {
 	private RequestDetailsService requestDetailsServiceImpl;
 	@Autowired
 	private AgentService agentServiceImpl;
+	
+	@Autowired
+	private SupplyService supplyServiceImpl;
+	
+	@Autowired
+	private EmailSenderService emailService;
 	
 	@GetMapping("/import")
 	public String handleManageImport(Principal principal,Model model) {
@@ -60,10 +70,29 @@ public class AdminImportController {
 		
 	}
 	
-	@GetMapping("/import/receiverequest/{requestID}")
-	public String handleReceiveImport(@PathVariable("requestID") int requestID , Principal principal , Model model) {
+	@GetMapping("/import/showrequestdetails/{requestID}")
+	public String handleShowRequestDetails(@PathVariable("requestID") int requestID,Principal principal,Model model) {
+		
+		List<RequestDetailsView> allRequestswithRequestID = requestDetailsServiceImpl.getAllRequestDetailsViewwithRequestID(requestID);
+		model.addAttribute("allRequestDetailswithRequestID", allRequestswithRequestID);
+		for(RequestDetailsView rqview:allRequestswithRequestID) {
+			System.out.println(rqview.getRequestID());
+			System.out.println(rqview.getRequestdetailsID());
+//			System.out.println(rqview.);
+		} 
+		return "showrequestdetailspage";
+		
+	}
+	
+	@GetMapping("/import/receiverequest/{requestID}/{agentID}")
+	public String handleReceiveImport(@PathVariable("requestID") int requestID ,@PathVariable("agentID") int agentID, Principal principal , Model model) {
 		
 		int countOfRecord = requestServiceImpl.receiveImportsetisfulfilledtrue(requestID);
+		
+		Agent agent = agentServiceImpl.getAgentByAgentID(agentID);
+		
+		emailService.sendImportReceivedSuccessEmail(agent,requestID);
+		
 		
 		return "redirect:/import";
 	}
@@ -99,8 +128,12 @@ public class AdminImportController {
 		model.addAttribute("currentRequestID",currentRequestID);
 		model.addAttribute("rqdetails",new RequestDetails(currentRequestID));
 		
-		List<Agent> allAgents = agentServiceImpl.getAllAgents();
-		model.addAttribute("allagents",allAgents);
+//		List<Agent> allAgents = agentServiceImpl.getAllAgents();
+//		model.addAttribute("allagents",allAgents);
+		
+		List<SupplyView> allProductsSuppliedByAgentID =  supplyServiceImpl.getAllProductssuppliedByAgentID(agentId);
+		
+		model.addAttribute("allProductsSuppliedByAgentID",allProductsSuppliedByAgentID);
 		return "makerequestpage";	
 	}
 	
@@ -109,15 +142,22 @@ public class AdminImportController {
 		
 
 		System.out.println(rqdetails.getRequestID());
+		
+		
 		int countOfRecord = requestDetailsServiceImpl.addRequestDetail(rqdetails);
 		List<RequestDetails> requestsMade =  requestDetailsServiceImpl.findAllDetailswithRequestID(rqdetails.getRequestID());
 		
+		int currentRequestID = rqdetails.getRequestID();
+		int agentId = requestServiceImpl.getAgentUsingRequestId(currentRequestID);
 		model.addAttribute("rqdetails",new RequestDetails(rqdetails.getRequestID()));
 		model.addAttribute("currentRequestID",rqdetails.getRequestID());
 		model.addAttribute("requestsMade",requestsMade);
+//		
+//		List<Agent> allAgents = agentServiceImpl.getAllAgents();
+//		model.addAttribute("allagents",allAgents);
 		
-		List<Agent> allAgents = agentServiceImpl.getAllAgents();
-		model.addAttribute("allagents",allAgents);
+		List<SupplyView> allProductsSuppliedByAgentID =  supplyServiceImpl.getAllProductssuppliedByAgentID(agentId);
+		model.addAttribute("allProductsSuppliedByAgentID",allProductsSuppliedByAgentID);
 		
 		return "makerequestPage";
 		
@@ -131,9 +171,14 @@ public class AdminImportController {
 		
 		List<RequestDetails> requestsMade =  requestDetailsServiceImpl.findAllDetailswithRequestID(currentRequestID);
 		
+		int agentId = requestServiceImpl.getAgentUsingRequestId(currentRequestID);
+		
 		model.addAttribute("rqdetails",new RequestDetails(currentRequestID));
 		model.addAttribute("currentRequestID",currentRequestID);
 		model.addAttribute("requestsMade",requestsMade);
+		
+		List<SupplyView> allProductsSuppliedByAgentID =  supplyServiceImpl.getAllProductssuppliedByAgentID(agentId);
+		model.addAttribute("allProductsSuppliedByAgentID",allProductsSuppliedByAgentID);
 		
 		return "makerequestPage";
 		
@@ -143,6 +188,10 @@ public class AdminImportController {
 	public String handleConfirmRequest(Model model,@RequestParam String currentRequestID) {
 		
 		int currentrequestID = Integer.parseInt(currentRequestID);
+		int totalamount = requestDetailsServiceImpl.getTotalAmountwithRequestID(currentrequestID);
+		
+		int countOfRecord = requestServiceImpl.setRequestTotalamount(currentrequestID,totalamount);
+		
 		List<RequestDetails> allrequestdetails = requestDetailsServiceImpl.findAllDetailswithRequestID(currentrequestID);
 		
 		model.addAttribute("allrequestdetails",allrequestdetails);

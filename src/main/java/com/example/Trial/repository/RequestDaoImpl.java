@@ -172,6 +172,28 @@ public class RequestDaoImpl implements RequestDao {
 		return allImports;
 	}
 
+	@Override
+	public int getAgentUsingRequestId(int currentRequestID) {
+		// TODO Auto-generated method stub
+		String sql = "select * from request where requestID = ?";
+		Object[] args = {currentRequestID};
+		
+		Request request = jdbcTemplate.queryForObject(sql, requestRowMapper, args);
+		
+		return request.getAgentID();
+	}
+
+	@Override
+	public int setRequestTotalamount(int currentrequestID, int totalamount) {
+		// TODO Auto-generated method stub
+		String sql ="Update request set totalamount = ? where requestId = ?";
+		Object[] args = {totalamount,currentrequestID};
+		
+		int countOfRecord = jdbcTemplate.update(sql,args);
+		
+		return countOfRecord;
+	}
+
 
     
 

@@ -99,4 +99,16 @@ public class AdminEmployeeController {
 		System.out.println("Employee successfully deleted");
 		return "redirect:/employee";
 	}
+	
+	@GetMapping("/employee/allemployees")
+	public String handleShowAllEmployees(Model model,Principal principal) {
+		
+		List<Employee> allEmployees = employeeServiceImpl.getAllEmployees();
+		for(Employee em:allEmployees) {
+			System.out.println(em.getEmail());
+		}
+		model.addAttribute("allEmployees", allEmployees);
+		return "allEmployees";
+		
+	}
 }

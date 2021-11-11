@@ -13,5 +13,6 @@ public interface AgentDao {
 	public List<Agent> getAllAgents();
 	
 	public Agent getAgentByEmail(String email);
+	public Agent getAgentByAgentID(int agentID);
 	
 }

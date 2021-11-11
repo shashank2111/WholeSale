@@ -7,21 +7,18 @@ public class Customer {
 	private String email;
 	private String phone;
 	private String address;
-	private String roletitle;
 	private String password;
 	
 	public Customer() {
 		super();
 	}
-	public Customer(String firstname, String lastname, String email, String phone, String address,
-			String roletitle) {
+	public Customer(String firstname, String lastname, String email, String phone, String address) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
-		this.roletitle = roletitle;
 	}
 	public int getCustomerID() {
 		return customerID;
@@ -59,13 +56,7 @@ public class Customer {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getRoletitle() {
-		return roletitle;
-	}
-	public void setRoletitle(String roletitle) {
-		this.roletitle = roletitle;
-	}
-	public Customer(String firstname, String lastname, String email, String phone, String address, String roletitle,
+	public Customer(String firstname, String lastname, String email, String phone, String address,
 			String password) {
 		super();
 		this.firstname = firstname;
@@ -73,7 +64,6 @@ public class Customer {
 		this.email = email;
 		this.phone = phone;
 		this.address = address;
-		this.roletitle = roletitle;
 		this.password = password;
 	}
 	public String getPassword() {

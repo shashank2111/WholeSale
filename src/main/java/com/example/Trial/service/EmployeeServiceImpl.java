@@ -59,4 +59,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return countOfRecord;
 	}
 
+	@Override
+	public List<Employee> getAllEmployees() {
+		// TODO Auto-generated method stub
+		List<Employee> allEmployees = employeeDaoImpl.getAllEmployees();
+		return allEmployees;
+	}
+
 }

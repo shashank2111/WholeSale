@@ -16,7 +16,7 @@
 <body>
     <div class="container mt-5">
         <form th:action="@{/makerequest/selectagent}" method="post" >
-            <h2>Contact Us</h2>
+            <h2>Select the Supplier </h2>
             <select name="agentID" >
                 <option value="select" disabled>select </option>
                 <option th:each="agent:${allagents}" th:value="${agent.agentID}"> <span th:text="${agent.agentID}"></span> <span th:text="${agent.firstname}"></span> <span th:text="${agent.lastname}"></span> </option>

@@ -32,6 +32,14 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 		return allOrderDetailsView;
 	}
 
+	@Override
+	public int getTotalamountOfOrderID(int currentOrderID) {
+		// TODO Auto-generated method stub
+		
+		int totalamount = orderDetailsDaoImpl.getTotalamountOfOrderID(currentOrderID);
+		return totalamount;
+	}
+
 
 
 }

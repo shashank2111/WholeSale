@@ -58,4 +58,11 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return customer;
 	}
+
+	@Override
+	public List<Customer> getAllCustomers() {
+		// TODO Auto-generated method stub	
+		List<Customer> allCustomers = customerDaoImpl.getAllCustomers();
+		return allCustomers;
+	}
 }

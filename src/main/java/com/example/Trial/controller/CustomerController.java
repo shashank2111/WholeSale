@@ -56,7 +56,7 @@ public class CustomerController {
 	@GetMapping("/c/customer")
 	public String handleCustomerEntrance(Principal principal,Model model) {
 		model.addAttribute("email", principal.getName());	
-		
+		System.out.println(principal.getName());
 		Customer customer = customerServiceImpl.getCustomerByEmail(principal.getName());
 		int customerID = customer.getCustomerID();
 		System.out.println("customer Id is ");
@@ -110,6 +110,9 @@ public class CustomerController {
 		
 		
 		int countOfRecord=  orderDetailsServiceImpl.insertOrderDetails(ods,currentOrderID);
+		
+		int totalamount = orderDetailsServiceImpl.getTotalamountOfOrderID(currentOrderID);
+		orderServiceImpl.setTotalamountOfOrderID(currentOrderID,totalamount);
 		
 		service.sendOrderSuccessEmail(customer);
 		

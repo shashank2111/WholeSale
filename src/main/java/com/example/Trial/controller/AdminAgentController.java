@@ -88,7 +88,6 @@ public class AdminAgentController {
 		model.addAttribute("originalagent",agent);
 		System.out.println(agent.toString());
 		
-		emailService.sendAgentDataEdit(agent);
 		
 		return "agentedit";
 	}
@@ -100,6 +99,7 @@ public class AdminAgentController {
 		System.out.println("No of rows affected = " + Integer.toString(count));
 		System.out.println("Updated the agent successfully");
 		System.out.println(agent.toString());
+		emailService.sendAgentDataUpdateSuccessEmail(agent);
 		return "redirect:/agent"; 	
 	}
 	
@@ -108,7 +108,19 @@ public class AdminAgentController {
 		
 		int countOfRecord = agentServiceImpl.deleteAgent(agent);
 		System.out.println("Agent successfully deleted");
+		
+		emailService.sendAgentUnsubscribedSuccessEmail(agent);
+		
 		return "redirect:/agent";
 	}
 	
+	@GetMapping("/agent/allagents")
+	public String handleAllAgents(Model model,Principal principal) {
+		
+		List<Agent> allAgents = agentServiceImpl.getAllAgents();
+		
+		model.addAttribute("allAgents", allAgents);
+		return "allagents";
+		
+	}
 }

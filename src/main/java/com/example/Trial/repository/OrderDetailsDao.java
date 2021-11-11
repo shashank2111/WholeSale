@@ -8,4 +8,5 @@ import com.example.Trial.model.OrderDetailsView;
 public interface OrderDetailsDao {
 	public int insertOrderDetails(OrderDetails[] ods,int currentOrderID);
 	public List<OrderDetailsView> getOrderDetailsViewbyOrderID(int orderID);
+	public int getTotalamountOfOrderID(int currentOrderID);
 }

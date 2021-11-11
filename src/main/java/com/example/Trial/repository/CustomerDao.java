@@ -12,4 +12,5 @@ public interface CustomerDao {
 	public int editCustomer(Customer customer);
 	public int deleteCustomer(Customer customer);
 	public Customer getCustomerByEmail(String email);
+	public List<Customer> getAllCustomers();
 }

@@ -22,4 +22,11 @@ public class ProductServiceImpl implements ProductService {
 		return allProducts;
 	}
 
+	@Override
+	public List<Product> getAllProductswithCategoryID(int categoryID) {
+		// TODO Auto-generated method stub
+		List<Product> allProductswithCategoryID = productDaoImpl.getAllProductswithCategoryID(categoryID);
+		return allProductswithCategoryID;
+	}
+
 }

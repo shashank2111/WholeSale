@@ -15,4 +15,6 @@ public interface RequestService {
 	public int receiveImportsetisfulfilledtrue(int requestID);
 	public List<Request> getAllMyExports(int agentID);
 	public List<Request> getAllImports();
+	public int getAgentUsingRequestId(int currentRequestID);
+	public int setRequestTotalamount(int currentrequestID,int totalamount);
 }

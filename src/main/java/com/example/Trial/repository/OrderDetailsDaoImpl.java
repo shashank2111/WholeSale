@@ -78,4 +78,14 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 		return allOrderswithID;
 	}
 
+	@Override
+	public int getTotalamountOfOrderID(int currentOrderID) {
+		// TODO Auto-generated method stub
+		String sql = "select sum(amount) as totalamount from orderdetailsview where orderID = ? group by orderID";
+		Object[] args = {currentOrderID};
+		
+		int totalamount = jdbcTemplate.queryForObject(sql,Integer.class , args);
+		return totalamount;
+	}
+
 }

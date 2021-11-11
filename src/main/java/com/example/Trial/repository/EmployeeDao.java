@@ -9,4 +9,5 @@ public interface EmployeeDao {
 	public List<Employee> findAllEmployeesByEmployee(Employee employee);
 	public int editEmployee(Employee employee);
 	public int deleteEmployee(Employee employee);
+	public List<Employee> getAllEmployees();
 }

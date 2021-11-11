@@ -103,4 +103,15 @@ public class AgentDaoImpl implements AgentDao {
 		return agent;
 	}
 
+	@Override
+	public Agent getAgentByAgentID(int agentID) {
+		// TODO Auto-generated method stub
+		String sql = "select * from agent where agentID = ?";
+		Object[] args = {agentID};
+		
+		Agent agent = jdbcTemplate.queryForObject(sql, agentRowMapper,args);
+		
+		return agent;
+	}
+
 }

@@ -108,4 +108,15 @@ public class RequestDetailsDaoImpl implements RequestDetailsDao {
 		return allRequestDetailsViewwithRequestID;
 	}
 
+	@Override
+	public int getTotalAmountwithRequestID(int currentrequestID) {
+		// TODO Auto-generated method stub
+		String sql = "select sum(totalamount) as totalamount from requestdetailsview where requestID = ? group by requestID";
+		Object[] args = {currentrequestID};
+		
+		int totalamount = jdbcTemplate.queryForObject(sql, Integer.class , args);
+		
+		return totalamount;
+	}
+
 }

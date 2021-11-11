@@ -98,11 +98,23 @@ public class CustomerDaoImpl implements CustomerDao {
 		// TODO Auto-generated method stub
 		
 		String sql = "select * from customer where email = ?";
+		System.out.println(email);
 		Object[] args = {email};
 		
 		Customer customer = jdbcTemplate.queryForObject(sql, customerRowMapper,args);
 		
 		return customer;
 	}
+
+	@Override
+	public List<Customer> getAllCustomers() {
+		// TODO Auto-generated method stub
+		String sql ="select * from customer ";
+		List<Customer> allCustomers = jdbcTemplate.query(sql, customerRowMapper);
+		
+		return allCustomers;
+	}
+	
+	
 
 }

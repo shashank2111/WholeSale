@@ -9,4 +9,5 @@ public interface EmployeeService {
 	public List<Employee> findAllEmployeesByEmployee(Employee employee);
 	public int updateEmployee(Employee employee);
 	public int deleteEmployee(Employee employee);
+	public List<Employee> getAllEmployees();
 }

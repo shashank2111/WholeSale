@@ -467,13 +467,14 @@
                                             <td>
                                             	<form th:action="@{/makerequest}" method="post" th:object="${rqdetails}" class="form-horizontal">
                                             	<input name="requestID" type="number" th:field="*{requestID}" th:value="${currentRequestID}" hidden>
-                                    			<input name="productID" type="number" th:field="*{productID}" />	
+                                            	
+                                            	<select name="productID" >
+                                            		<option th:each="supplyview : ${allProductsSuppliedByAgentID}" th:value="${supplyview.productID}" > <span th:text="${supplyview.productID}"></span> <span th:text="${supplyview.product}"></span> <span th:text="${supplyview.sellprice}"></span> </option>
+                                            	</select>
+                                            	
                     							<input name="quantity" type="number" th:field="*{quantity}" />
-                    							<input name="productprice" type="number" th:field="*{productprice}" />
-                    							<select name="agentID" >
-                    								<option value="select" >select </option>
-                    								<option th:each="agent:${allagents}" value="${agent.agentID}"> <span th:text="${agent.agentID}"></span> <span th:text="${agent.firstname}"></span> <span th:text="${agent.lastname}"></span> </option>
-                    							</select>
+                                    			
+                    							
                     							<button type="submit"> Add the product</button>
                            						</form>
                                                 

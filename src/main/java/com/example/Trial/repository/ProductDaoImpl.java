@@ -24,6 +24,7 @@ public class ProductDaoImpl implements ProductDao {
             product.setProductID(resultSet.getInt("productID"));
             product.setProductname(resultSet.getString("productname"));
             product.setDesc(resultSet.getString("description"));
+            product.setCostprice(resultSet.getInt("costprice"));
             product.setSellprice(resultSet.getInt("sellprice"));
             product.setBrand(resultSet.getString("brand"));
             product.setCategoryID(resultSet.getInt("categoryID"));
@@ -42,6 +43,17 @@ public class ProductDaoImpl implements ProductDao {
 		
 		
 		return allProducts; 
+	}
+
+
+	@Override
+	public List<Product> getAllProductswithCategoryID(int categoryID) {
+		// TODO Auto-generated method stub
+		String sql = "select * from product where categoryID = ?";
+		Object[] args = {categoryID};
+		
+	 	List<Product> allProducts =  jdbcTemplate.query(sql, productRowMapper,args);
+		return allProducts;
 	}
 
 }

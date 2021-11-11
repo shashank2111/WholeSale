@@ -6,6 +6,6 @@ import com.example.Trial.model.Product;
 
 public interface ProductDao {
 
-	List<Product> getAllProducts();
-	
+	public List<Product> getAllProducts();
+	public List<Product>getAllProductswithCategoryID(int categoryID);
 }

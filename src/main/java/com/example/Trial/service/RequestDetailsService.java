@@ -12,4 +12,5 @@ public interface RequestDetailsService {
 	public int deleteDetail(RequestDetails rqdetail);
 	public int deleteAllDetailswithRequestID(int currentrequestID);
 	public List<RequestDetailsView> getAllRequestDetailsViewwithRequestID(int requestID);
+	public int getTotalAmountwithRequestID(int currentrequestID);
 }

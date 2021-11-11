@@ -28,6 +28,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
             employee.setEmail(resultSet.getString("email"));
             employee.setPhone(resultSet.getString("phone"));
             employee.setAddress(resultSet.getString("address"));
+            employee.setDoj(resultSet.getString("Doj"));
+            employee.setEducation(resultSet.getString("education"));
             return employee;
         }
     };
@@ -78,6 +80,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		Object[] args = {employee.getEmail()};
 		
 		return jdbcTemplate.update(sql,args);
+	}
+
+	@Override
+	public List<Employee> getAllEmployees() {
+		// TODO Auto-generated method stub
+		
+		String sql = "select * from employee ";
+		
+		List<Employee> allEmployees = jdbcTemplate.query(sql,employeeRowMapper);
+		
+		return allEmployees;
 	}
 
 }

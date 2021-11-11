@@ -16,5 +16,6 @@ public interface OrderDao {
 	
 	public List<OrdersView> getAllUnReceivedOrders();
 	public int makePendingOrderFalsewithOrderID(int orderID);
+	public int setTotalamountOfOrderID(int currentOrderID,int totalamount);
 	
 }

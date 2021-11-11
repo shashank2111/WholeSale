@@ -89,6 +89,8 @@ public class AdminCustomerController {
 		System.out.println("No of rows affected = " + Integer.toString(count));
 		System.out.println("Updated the customer successfully");
 		System.out.println(customer.toString());
+		
+		emailService.sendCustomerEditSuccessEmail(customer);
 		return "redirect:/customer"; 	
 	}
 	
@@ -97,8 +99,18 @@ public class AdminCustomerController {
 		
 		int countOfRecord = customerServiceImpl.deleteCustomer(customer);
 		System.out.println("Customer successfully deleted");
+		
+		
+		emailService.removeCustomerFromPortalEmail(customer);
 		return "redirect:/customer";
 	}
 	
+	@GetMapping("/customer/allcustomers")
+	public String handleShowAllCustomers(Model model,Principal principal) {
+		List<Customer> allCustomers = customerServiceImpl.getAllCustomers();
+		model.addAttribute("allCustomers", allCustomers);
+		
+		return "allCustomers";
+	}
 	
 }

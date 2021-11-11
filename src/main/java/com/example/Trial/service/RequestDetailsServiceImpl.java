@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Trial.model.RequestDetails;
 import com.example.Trial.model.RequestDetailsView;
+import com.example.Trial.repository.RequestDaoImpl;
 import com.example.Trial.repository.RequestDetailsDao;
 
 @Service
@@ -54,6 +55,14 @@ public class RequestDetailsServiceImpl implements RequestDetailsService {
 		List<RequestDetailsView> allRequestDetailsViewwithRequestID = requestDetailsDaoImpl.getAllRequestDetailsViewwithRequestID(requestID);
 		
 		return allRequestDetailsViewwithRequestID;
+	}
+
+	@Override
+	public int getTotalAmountwithRequestID(int currentrequestID) {
+		// TODO Auto-generated method stub
+		int totalamount = requestDetailsDaoImpl.getTotalAmountwithRequestID(currentrequestID);
+		
+		return totalamount;
 	}
 
 }

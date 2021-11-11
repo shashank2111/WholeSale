@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.Trial.model.OrderDetailsView;
 import com.example.Trial.model.OrdersView;
+import com.example.Trial.service.EmailSenderService;
 import com.example.Trial.service.OrderDetailsService;
 import com.example.Trial.service.OrderService;
 
@@ -26,13 +27,17 @@ public class AdminOrderController {
 	@Autowired
 	private OrderDetailsService orderDetailsServiceImpl;
 	
+	@Autowired 
+	private EmailSenderService emailService;
+	
 	@GetMapping("/order")
 	public String handleOrdersPage(Model model,Principal principal) {
 		
 		List<OrdersView> unAttendedOrders = orderServiceImpl.getAllUnAttendedOrders();
-//		for(OrdersView ov:unAttendedOrders) {
-//			System.out.println(ov.getCustomeremail());
-//		}
+		System.out.println("START \n");
+		for(OrdersView ov:unAttendedOrders) {
+			System.out.println(ov.getCustomeremail());
+		}
 		model.addAttribute("email", principal.getName());
 		model.addAttribute("unAttendedOrders",unAttendedOrders);
 		
@@ -41,7 +46,7 @@ public class AdminOrderController {
 			System.out.println(ov.isOrderIsPending());
 			System.out.println(ov.isIshandled());
 		}
-		
+		System.out.println("END \n");
 		model.addAttribute("unReceivedOrders",unReceivedOrders);
 		return "unprocessedorders";
 	}
@@ -57,18 +62,20 @@ public class AdminOrderController {
 		return "orderdetails";
 	}
 	
-	@GetMapping("/order/makependingfalse/{orderID}")
-	public String handleMakePendingOrderfalse(@PathVariable("orderID") int orderID,Model model) {
+	@GetMapping("/order/makependingfalse/{orderID}/{customeremail}")
+	public String handleMakePendingOrderfalse(@PathVariable("orderID") int orderID,@PathVariable("customeremail") String email,Model model) {
 		
 		int countOfRecord = orderServiceImpl.makePendingOrderFalsewithOrderID(orderID);
+		emailService.sendOrderReceivedEmail(email,orderID);
 		return "redirect:/order";
 	}
 	
-	@GetMapping("/order/handleorder/{orderID}")
-	public String handleOrderHandling(@PathVariable("orderID") int orderID,Model model) {
+	@GetMapping("/order/handleorder/{orderID}/{customeremail}")
+	public String handleOrderHandling(@PathVariable("orderID") int orderID,@PathVariable("customeremail") String email,Model model) {
 		
 		int countOfRecord = orderServiceImpl.handleOrderwithOrderID(orderID);
 //		System.out.println(orderID);
+		emailService.sendOrderShippedEmail(email,orderID);
 		return "redirect:/order";
 	}
 	

@@ -23,7 +23,7 @@
         }
     </style>
 
-    <title>Manage Agents</title>
+    <title>Manage Product</title>
 </head>
 
 <body>
@@ -159,29 +159,29 @@
         <div class="row">
             <div class="col-md-1 "></div>
             <div class="col-md-5 ">
-                <!-- <div class="border">okayjbdbhdbhddddddddddddddddddddddddddddddddddddddddddddd</div> -->
+                
                 <div class="row">
                     <div class="col-md-10">
-                        <form class="well form-horizontal" th:action="@{/agent}" method="post" id="agent_form" th:object="${agent}">
+                        <form class="well form-horizontal" th:action="@{/product/addcustomer}" method="post" id="product_form" th:object="${product}">
                             <fieldset>
 
                                 <!-- Form Name -->
                                 <legend>
                                     <center>
-                                        <h2><b>Agent Registration Form</b></h2>
+                                        <h2><b>Add Product to the Inventory</b></h2>
                                     </center>
                                 </legend><br>
 
                                 <!-- Text input-->
 
                                 <div class="form-group">
-                                    <label class=" control-label">First Name</label>
+                                    <label class=" control-label">productID</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
-                                            <input name="firstname" placeholder="First Name" class="form-control" field="*{firstname}"
-                                                type="text">
+                                            <input name="productID" placeholder="productID" class="form-control" field="*{productID}"
+                                                type="number">
                                         </div>
                                     </div>
                                 </div>
@@ -189,23 +189,23 @@
                                 <!-- Text input-->
 
                                 <div class="form-group">
-                                    <label class=" control-label">Last Name</label>
+                                    <label class=" control-label">Product</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
-                                            <input name="lastname" placeholder="Last Name" class="form-control" field="*{lastname}"
+                                            <input name="productname" placeholder="productname" class="form-control" field="*{productname}"
                                                 type="text">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class=" control-label">Address</label>
+                                    <label class=" control-label">Description</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
-                                            <input name="address" placeholder="Address" class="form-control" field="*{address}"
+                                            <input name="desc" placeholder="description" class="form-control" field="*{desc}"
                                                 type="text">
                                         </div>
                                     </div>
@@ -215,25 +215,28 @@
 								
 
                                 <div class="form-group">
-                                    <label class="control-label">Contact</label>
+                                    <label class="control-label">CostPrice</label>
                                     <div class="inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-earphone"></i></span>
-                                            <input name="phone" placeholder="(639)" class="form-control" field="*{phone}"
-                                                type="text">
+                                            <input name="costprice" placeholder="Purchasing price" class="form-control" field="*{costprice}"
+                                                type="int">
                                         </div>
                                     </div>
                                 </div>
+								
+								
+
                                 <!-- Text input-->
                                 <div class="form-group">
-                                    <label class=" control-label">E-Mail</label>
+                                    <label class=" control-label">Sell Price</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-envelope"></i></span>
-                                            <input name="email" placeholder="E-Mail Address" class="form-control" field="*{email}"
-                                                type="email">
+                                            <input name="sellprice" placeholder="Selling Price" class="form-control" field="*{sellprice}"
+                                                type="int">
                                         </div>
                                     </div>
                                 </div>
@@ -241,13 +244,25 @@
                                 <!-- Text input-->
 
                                 <div class="form-group">
-                                    <label class=" control-label">Password</label>
+                                    <label class=" control-label">Brand</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
-                                            <input name="password" placeholder="Password" class="form-control" field="*{password}"
-                                                type="password">
+                                            <input name="brand" placeholder="brand" class="form-control" field="*{brand}"
+                                                type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">CategoryID</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group">
+                                            <select class="form-control" name="categoryID" placeholder="select">
+                                            <
+                                            	<option th:each="category: ${allCategories}" th:value="${category.categoryID}">Category- <span th:text="${category.categoryname}"></span>,roomno - <span th:text="${category.roomno}"></span></option>
+                                            </select>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -257,8 +272,8 @@
 
                                 <!-- Success message -->
                                 <div class="alert alert-success" role="alert" th:if = "${success} == true">
-									<p>Successfully registered. Your Agent Id is </p>
-									<p th:text="${agentID}"></p>
+									<p>Successfully added the product. </p>
+									
 								</div>
                                 <div class="alert alert-success" role="alert" id="success_message"> <i
                                         class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
@@ -273,15 +288,9 @@
                                                 class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
                                     </div>
                                 </div>
+								
+								
                                 
-                                <div class="row pl-5 mt-2">
-                                	<a th:href="@{/agent/allagents}">
-                                	<div class=" btn btn-outline-secondary" style="width:100%">
- 		                               	Show All Agents
-                                	</div>
- 		                               	</a>
-                                </div>
-
                             </fieldset>
                         </form>
                         
@@ -311,13 +320,13 @@
                             <h2><b>Search by</b></h2>
                         </center>
                     </legend><br>
-                    <form th:action="@{/agent/search}" method = "post" th:object = "${agent}">
+                    <form th:action="@{/customer/search}" method = "post" th:object = "${customer}">
 	                    <div class="form-group mt-1">
 	                        <!-- <label class=" control-label">Agent Name</label> -->
 	                        <div class=" inputGroupContainer">
 	                            <div class="input-group">
 	                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-	                                <input name="email" placeholder="Agent email" class="form-control" type="text" field="*{email}">
+	                                <input name="email" placeholder="Product email" class="form-control" type="text" field="*{email}">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -326,7 +335,7 @@
 	                        <div class=" inputGroupContainer">
 	                            <div class="input-group">
 	                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-	                                <input name="customerID" placeholder="Agent Id" class="form-control" type="number" field="*{agentID}">
+	                                <input name="customerID" placeholder="Product Id" class="form-control" type="number" field="*{customerID}">
 	                            </div>
 	                        </div>
 	                    </div>
@@ -338,7 +347,7 @@
                         <div class="col mt-4">
                             <div class="card  mb-4">
                                 <div class="card-header pb-0">
-                                    <h6>Matched Agents</h6>
+                                    <h6>Matched Products</h6>
                                 </div>
                                 <div class="card-body px-0 pt-0 pb-2">
                                     <div class="table-responsive p-0">
@@ -362,13 +371,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr th:each="agent : ${agents}">
+                                                <tr th:each="customer : ${customers}">
                                                 
                                                     <td>
                                                         <div class="d-flex px-2 py-1">
                                                             <div class="d-flex flex-column justify-content-center">
-                                                                <h6 class="mb-0 text-sm" th:text="${agent.agentID}"></h6>
-                                                                <p class="text-xs text-secondary mb-0" th:text="${agent.email}">
+                                                                <h6 class="mb-0 text-sm" th:text="${customer.customerID}"></h6>
+                                                                <p class="text-xs text-secondary mb-0" th:text="${customer.email}">
                                                                     john@creative-tim.com</p>
                                                             </div>
                                                         </div>
@@ -385,34 +394,30 @@
                                                             class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                                     </td>
                                                     
-                                                    <form th:action="@{/agent/edit}" method="post" id="agent_edit_form" th:object="${agentcurrent}">
+                                                    <form th:action="@{/customer/edit}" method="post" id="customer_edit_form" th:object="${customercurrent}">
                                                     <td class="align-middle">
-                                                    	<input type="hidden" id="customerId" name="customerId"  th:value="${agent.agentID}">
-                                                    	<input type="hidden" id="firstname" name="firstname"  th:value="${agent.firstname}">
-                                                    	<input type="hidden" id="lastname" name="lastname"  th:value="${agent.lastname}">
-                                                    	<input type="hidden" id="email" name="email"  th:value="${agent.email}">
-                                                    	<input type="hidden" id="address" name="address"  th:value="${agent.address}">
-                                                    	<input type="hidden" id="phone" name="phone"  th:value="${agent.phone}">
-                                                    	<input type="hidden" id="password" name="password"  th:value="${agent.password}">
+                                                    	<input type="hidden" id="customerId" name="customerId"  th:value="${customer.customerID}">
+                                                    	<input type="hidden" id="firstname" name="firstname"  th:value="${customer.firstname}">
+                                                    	<input type="hidden" id="lastname" name="lastname"  th:value="${customer.lastname}">
+                                                    	<input type="hidden" id="email" name="email"  th:value="${customer.email}">
+                                                    	<input type="hidden" id="address" name="address"  th:value="${customer.address}">
+                                                    	<input type="hidden" id="phone" name="phone"  th:value="${customer.phone}">
+                                                    	
                                                         <button
                                                             data-toggle="tooltip" data-original-title="Edit user">
                                                             Edit
                                                         </button>
                                                     </td>
                                                     </form>
-                                                    <form th:action="@{/agent/delete}" method = "post" id = "agent_delete_form" th:object="${agenttodelete}">
+                                                    <form th:action="@{/customer/delete}" method = "post" id = "customer_delete_form" th:object="${customertodelete}">
                                                     	<td>	
-                                                    		<input type="hidden" id="emailtodelete" name="email" th:value="${agent.email}" field="*{email}">
+                                                    		<input type="hidden" id="emailtodelete" name="email" th:value="${customer.email}" field="*{email}">
                                                     		<button data-toggle="tooltip" data-original-title="Edit user">
                                                             	Delete
                                                             	</button>
                                                         </td>    	
                                                     </form>
                                                 </tr>
-                                                
-                                                
-                                                
-
                                             </tbody>
                                         </table>
                                         </form>
