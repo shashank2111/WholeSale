@@ -119,6 +119,7 @@ public class AdminAgentController {
 		
 		List<Agent> allAgents = agentServiceImpl.getAllAgents();
 		
+		model.addAttribute("email", principal.getName());
 		model.addAttribute("allAgents", allAgents);
 		return "allagents";
 		
