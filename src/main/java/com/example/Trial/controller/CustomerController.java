@@ -18,11 +18,13 @@ import com.example.Trial.model.OrderDetails;
 import com.example.Trial.model.OrderDetailsEditor;
 import com.example.Trial.model.OrderDetailsWrapper;
 import com.example.Trial.model.Product;
+import com.example.Trial.repository.TransactionDao;
 import com.example.Trial.service.CustomerService;
 import com.example.Trial.service.EmailSenderService;
 import com.example.Trial.service.OrderDetailsService;
 import com.example.Trial.service.OrderService;
 import com.example.Trial.service.ProductService;
+import com.example.Trial.service.TransactionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,6 +49,9 @@ public class CustomerController {
 	
 	@Autowired
 	private EmailSenderService service;
+	
+	@Autowired
+	private TransactionService transactionServiceImpl;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -111,7 +116,10 @@ public class CustomerController {
 		
 		int countOfRecord=  orderDetailsServiceImpl.insertOrderDetails(ods,currentOrderID);
 		
+		
 		int totalamount = orderDetailsServiceImpl.getTotalamountOfOrderID(currentOrderID);
+		
+		transactionServiceImpl.insertTransaction(totalamount,false,customerID);
 		orderServiceImpl.setTotalamountOfOrderID(currentOrderID,totalamount);
 		
 		service.sendOrderSuccessEmail(customer);

@@ -1,15 +1,17 @@
 package com.example.Trial.repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.Trial.model.Category;
+import com.example.Trial.model.OrderDetailsView;
 import com.example.Trial.model.Product;
 
 @Repository
@@ -29,6 +31,8 @@ public class ProductDaoImpl implements ProductDao {
             product.setSellprice(resultSet.getInt("sellprice"));
             product.setBrand(resultSet.getString("brand"));
             product.setCategoryID(resultSet.getInt("categoryID"));
+            product.setAlertstock(resultSet.getInt("alertstock"));
+            product.setStock(resultSet.getInt("stock"));
             return product;
         }
     };
@@ -37,7 +41,6 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public List<Product> getAllProducts() {
 		// TODO Auto-generated method stub
-		
 		
 		String sql = "Select * from product";
 		List<Product> allProducts = jdbcTemplate.query(sql, productRowMapper);
@@ -90,6 +93,75 @@ public class ProductDaoImpl implements ProductDao {
 		
 		List<Product> allProducts = jdbcTemplate.query(sql,productRowMapper,args);
 		return allProducts;
+	}
+
+
+	@Override
+	public Product getProductfromProductID(int productID) {
+		// TODO Auto-generated method stub
+		String sql = "select * from product where productID = ?";
+		Object[] args = {productID};
+		Product product = jdbcTemplate.queryForObject(sql, productRowMapper,args);
+		return product;
+	}
+
+
+	@Override
+	public int deleteProductwithProductID(int productID) {
+		// TODO Auto-generated method stub
+		String sql = "delete from product where productID = ?";
+		Object[] args = {productID};
+		int countOfRecord = jdbcTemplate.update(sql,args);
+		return countOfRecord;
+	}
+
+
+	@Override
+	public int updateProduct(Product product) {
+		// TODO Auto-generated method stub
+		String sql = "update product set productname = ?,categoryID = ?,costprice =? , sellprice = ?, description = ? where productID = ?";
+		Object[] args = {product.getProductname(),product.getCategoryID(),product.getCostprice(),product.getSellprice(),product.getDesc(),product.getProductID()};
+		
+		int countOfRecord = jdbcTemplate.update(sql,args);
+		return countOfRecord;
+	}
+
+
+	@Override
+	public int updateQuantityProduct(List<OrderDetailsView> allOrderDetailsViews) {
+		// TODO Auto-generated method stub
+		String sql = "update product set quantity = quantity - ? where productID = ?";
+	
+		int[] cR = jdbcTemplate.batchUpdate(sql,new BatchPreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				// TODO Auto-generated method stub
+				OrderDetailsView odview = allOrderDetailsViews.get(i);
+				ps.setInt(1, odview.getQuantity());
+				ps.setInt(2, odview.getProductID());
+			}
+			
+			@Override
+			public int getBatchSize() {
+				// TODO Auto-generated method stub
+				return allOrderDetailsViews.size();
+			}
+		});
+		
+		
+		
+		return 1;
+	}
+
+
+	@Override
+	public List<Product> getAllAlertProducts() {
+		// TODO Auto-generated method stub
+		String sql = "select * from product where stock <= alertstock";
+		
+		List<Product> allAlertProducts = jdbcTemplate.query(sql, productRowMapper);
+		return allAlertProducts;
 	}
 
 }

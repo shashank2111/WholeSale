@@ -91,7 +91,7 @@
                                     <label class=" control-label">productID</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i
+                                            <span class="input-group-addon "><i
                                                     class="glyphicon glyphicon-user"></i></span>
                                             <input name="productID" placeholder="productID" class="form-control" field="*{productID}"
                                                 type="number">
@@ -179,7 +179,28 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class=" control-label">Stock</label>
+                                    <div class=" inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-user"></i></span>
+                                            <input name="stock" placeholder="quantity" class="form-control" field="*{stock}"
+                                                type="number">
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="form-group">
+                                    <label class=" control-label">Stock Alert at</label>
+                                    <div class=" inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-user"></i></span>
+                                            <input name="alertstock" placeholder="alertstock" class="form-control" field="*{alertstock}"
+                                                type="">
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Text input-->
                                 <!-- Select Basic -->
 
@@ -265,6 +286,12 @@
                                                     <th
                                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                         Sellprice</th>
+                                                    <th
+                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                        Stock Quantity</th>
+                                                    <th
+                                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                        Stock Alert</th>
                                                     <th class="text-secondary opacity-7"> </th>
                                                     <th class="text-secondary opacity-7"> </th>
                                                 </tr>
@@ -291,29 +318,34 @@
                                                         <span
                                                             class="text-secondary text-xs font-weight-bold" th:text="${product.sellprice}"></span>
                                                     </td>
-                                                    <form th:action="@{/store/product/edit}" method="post" id="product_edit_form" th:object="${productcurrent}">
+                                                    <td class="align-middle text-center">
+                                                        <span
+                                                            class="text-secondary text-xs font-weight-bold" th:text="${product.stock}"></span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span
+                                                            class="text-secondary text-xs font-weight-bold" th:text="${product.alertstock}"></span>
+                                                    </td>
                                                     <td class="align-middle">
-                                                    	<input type="hidden" id="productId" name="productId"  th:value="${product.productID}">
-                                                    	<input type="hidden" id="firstname" name="productname"  th:value="${product.productname}">
-                                                    	<input type="hidden" id="lastname" name="categoryID"  th:value="${product.categoryID}">
-                                                    	<input type="hidden" id="email" name="costprice"  th:value="${product.costprice}">
-                                                    	<input type="hidden" id="address" name="sellprice"  th:value="${product.sellprice}">
-                                                    
                                                     	
+                                                    
+                                                    	<a th:href="@{/store/product/edit/__${product.productID}__}">
                                                         <button
                                                             data-toggle="tooltip" data-original-title="Edit user">
                                                             Edit
                                                         </button>
+                                                        </a>
                                                     </td>
-                                                    </form>
-                                                    <form th:action="@{/store/product/delete}" method = "post" id = "product_delete_form" th:object="${producttodelete}">
+                                                    
+                                                    
                                                     	<td>	
-                                                    		<input type="hidden" id="productIDtodelete" name="productID" th:value="${product.productID}" field="*{productID}">
+                                                    		
+                                                    		<a th:href="@{/store/product/delete/__${product.productID}__}">
                                                     		<button data-toggle="tooltip" data-original-title="Edit user">
                                                             	Delete
                                                             	</button>
+                                                           	</a>
                                                         </td>    	
-                                                    </form>
                                                 </tr>
                                             </tbody>
                                         </table>

@@ -5,24 +5,29 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.Trial.model.OrderDetails;
 import com.example.Trial.model.OrderDetailsView;
 import com.example.Trial.model.OrdersView;
 import com.example.Trial.service.EmailSenderService;
 import com.example.Trial.service.OrderDetailsService;
 import com.example.Trial.service.OrderService;
+import com.example.Trial.service.ProductService;
 
 @Controller
 public class AdminOrderController {
 
 	@Autowired
 	private OrderService orderServiceImpl;
+	
+	@Autowired
+	private ProductService productServiceImpl;
 	
 	@Autowired
 	private OrderDetailsService orderDetailsServiceImpl;
@@ -70,10 +75,15 @@ public class AdminOrderController {
 		return "redirect:/order";
 	}
 	
+	@Transactional
 	@GetMapping("/order/handleorder/{orderID}/{customeremail}")
 	public String handleOrderHandling(@PathVariable("orderID") int orderID,@PathVariable("customeremail") String email,Model model) {
 		
 		int countOfRecord = orderServiceImpl.handleOrderwithOrderID(orderID);
+		
+		List<OrderDetailsView> allOrderDetailsViews = orderDetailsServiceImpl.getOrderDetailsViewbyOrderID(orderID);
+		int countOfRecord1 = productServiceImpl.updateQuantityProduct(allOrderDetailsViews);
+		
 //		System.out.println(orderID);
 		emailService.sendOrderShippedEmail(email,orderID);
 		return "redirect:/order";

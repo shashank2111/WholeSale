@@ -72,36 +72,7 @@ public class OrderDaoImpl implements OrderDao {
 		Object[] args = {maxID+1,strDate,true,0,customerID,false,false};
 		jdbcTemplate.update(sql1,args);
 		return maxID+1;
-//		System.out.println("here");
-//		String sql = "select count(*) from orders";	
-//    	int count = jdbcTemplate.queryForObject(sql,Integer.class);
-//    	System.out.println("count = " + Integer.toString(count));
-//    	if(count == 0) {
-//    		
-//    		String sql1 = "Insert into request(requestId,requestdate,isinprocess,isfulfilled,agentID) values (?,?,?,?,?)";
-//    		Date date = Calendar.getInstance().getTime();  
-//    		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//    		String strDate = dateFormat.format(date);
-//    		Object[] args = {1,strDate,false,false,agentID};
-//    		jdbcTemplate.update(sql1,args);
-//    		return 1;
-//    	}
-//		sql = "select * from request where requestID = (select MAX(requestID) from request)";
-//		
-//		Request rq = jdbcTemplate.queryForObject(sql, requestRowMapper);
-//		int maxId = rq.getRequestID();
-//		
-//		
-//		String sql1 = "Insert into request(requestId,requestdate,isinprocess,isfulfilled,agentID) values(?,?,?,?,?)";
-//		Date date = Calendar.getInstance().getTime();  
-//		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
-//		String strDate = dateFormat.format(date);
-//		Object[] args = {maxId+1,strDate,false,false,agentID};
-//		jdbcTemplate.update(sql1,args);
-		
-//		return maxId + 1;
-				
-//		return 0;
+
 	}
 
 

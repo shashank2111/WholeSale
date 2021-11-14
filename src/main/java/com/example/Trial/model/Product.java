@@ -7,24 +7,26 @@ public class Product {
 	private String desc;
 	private int costprice;
 	private int sellprice;
+	private int stock;
+	private int alertstock;
 	private String brand;
 	private int categoryID;
 	public Product() {
 		super();
 	}
-	
-	public Product(int productID, String productname, String desc, int costprice, int sellprice, String brand,
-			int categoryID) {
+	public Product(int productID, String productname, String desc, int costprice, int sellprice, int stock,
+			int alertstock, String brand, int categoryID) {
 		super();
 		this.productID = productID;
 		this.productname = productname;
 		this.desc = desc;
 		this.costprice = costprice;
 		this.sellprice = sellprice;
+		this.stock = stock;
+		this.alertstock = alertstock;
 		this.brand = brand;
 		this.categoryID = categoryID;
 	}
-
 	public int getProductID() {
 		return productID;
 	}
@@ -69,7 +71,18 @@ public class Product {
 	public void setCostprice(int costprice) {
 		this.costprice = costprice;
 	}
-	
-	
-	
+
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	public int getAlertstock() {
+		return alertstock;
+	}
+	public void setAlertstock(int alertstock) {
+		this.alertstock = alertstock;
+	}
+
 }

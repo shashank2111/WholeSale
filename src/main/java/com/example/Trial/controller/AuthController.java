@@ -1,6 +1,7 @@
 package com.example.Trial.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.Trial.model.Product;
 import com.example.Trial.model.User;
+import com.example.Trial.service.ProductService;
 import com.example.Trial.service.UserDetailsServiceImpl;
 
 @Controller
@@ -18,6 +21,9 @@ public class AuthController {
 	
 	@Autowired
 	private UserDetailsServiceImpl userDetailsServiceImpl;
+	
+	@Autowired
+	private ProductService productServiceImpl;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -49,6 +55,12 @@ public class AuthController {
 	 @GetMapping("/")
 	 public String handleRoot(Principal principal,Model model) {
 		 model.addAttribute("email",principal.getName());
+		 
+		 List<Product> alertProducts = productServiceImpl.getAllAlertProducts();
+		 for(Product p:alertProducts) {
+			 System.out.println(p.getProductname());
+		 }
+		 model.addAttribute("alertProducts", alertProducts);
 		 return "root.html";
 	 }
 }

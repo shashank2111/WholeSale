@@ -167,7 +167,7 @@
 		                                                class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
 		                                                ProductID</th>
 		                                            <th
-		                                                class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+		                                                class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ">
 		                                                Product</th>
 		                                            <th
 		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -175,6 +175,12 @@
 		                                            <th
 		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 		                                                sellprice </th>
+		                                            <th
+		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+		                                                Stock </th>
+		                                            <th
+		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+		                                                Stock alert </th>
 		                                            <th
 		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 		                                                Brand </th>
@@ -200,6 +206,12 @@
 		                                            
 		                                            <td class="align-middle text-center">
 		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.sellprice}"></span>
+		                                            </td>
+		                                            <td class="align-middle text-center">
+		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.stock}"></span>
+		                                            </td>
+		                                            <td class="align-middle text-center">
+		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.alertstock}"></span>
 		                                            </td>
 		                                            <td class="align-middle text-center">
 		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.brand}"></span>
@@ -239,6 +251,12 @@
 		                                                sellprice </th>
 		                                            <th
 		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+		                                                Stock </th>
+		                                            <th
+		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+		                                                Stock alert </th>
+		                                            <th
+		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
 		                                                Brand </th>
 		                                            <th
 		                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -262,6 +280,12 @@
 		                                            
 		                                            <td class="align-middle text-center">
 		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.sellprice}"></span>
+		                                            </td>
+		                                            <td class="align-middle text-center">
+		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.stock}"></span>
+		                                            </td>
+		                                            <td class="align-middle text-center">
+		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.alertstock}"></span>
 		                                            </td>
 		                                            <td class="align-middle text-center">
 		                                                <span class="text-secondary text-xs font-weight-bold" th:text="${product.brand}"></span>

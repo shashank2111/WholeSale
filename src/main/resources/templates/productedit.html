@@ -32,19 +32,10 @@
         navbar-scroll="true">
         <div class="container-fluid py-1 px-3">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a>
-                    </li>
-                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Home</li>
-                </ol>
                 <h6 class="font-weight-bolder mb-0">WholeSaleAgency</h6>
             </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="Type here...">
-                    </div>
                 </div>
                 <ul class="navbar-nav  justify-content-end">
                     <li class="nav-item d-flex align-items-center">
@@ -180,7 +171,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
-                                            <input name="productID" placeholder="ProductID" class="form-control" field="*{productID}" th:value="${originalproduct.productID}"
+                                            <input name="productID" placeholder="ProductID" class="form-control" field="*{productID}" th:value="${originalproduct.productID}" readonly
                                                 type="number">
                                         </div>
                                     </div>
@@ -201,7 +192,7 @@
                                 <!-- Text input-->
 
                                 <div class="form-group">
-                                    <label class=" control-label">Last Name</label>
+                                    <label class=" control-label">CategoryID</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
@@ -212,7 +203,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class=" control-label">Address</label>
+                                    <label class=" control-label">CostPrice</label>
                                     <div class=" inputGroupContainer">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
@@ -224,10 +215,7 @@
                                 </div>
 
 								<!-- Text input-->
-								
-
-
-                                <!-- Text input-->
+								<!-- Text input-->
                                 <div class="form-group">
                                     <label class=" control-label">Sellprice</label>
                                     <div class=" inputGroupContainer">
@@ -236,6 +224,44 @@
                                                     class="glyphicon glyphicon-envelope"></i></span>
                                             <input name="sellprice" placeholder="sellprice" class="form-control" field="*{sellprice}" th:value = "${originalproduct.sellprice}" 
                                                 type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class=" control-label">Stock Quantity</label>
+                                    <div class=" inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-envelope"></i></span>
+                                            <input name="stock" placeholder="Stock Quantity" class="form-control" field="*{stock}" th:value = "${originalproduct.stock}" 
+                                                type="number">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class=" control-label">Stock Alert at</label>
+                                    <div class=" inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-envelope"></i></span>
+                                            <input name="alertstock" placeholder="Stock Alert Quantity" class="form-control" field="*{alertstock}" th:value = "${originalproduct.alertstock}" 
+                                                type="number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class=" control-label">Description</label>
+                                    <div class=" inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-envelope"></i></span>
+                                            <input name="desc" placeholder="description" class="form-control" field="*{desc}" th:value = "${originalproduct.desc}" 
+                                                type="text">
                                         </div>
                                     </div>
                                 </div>

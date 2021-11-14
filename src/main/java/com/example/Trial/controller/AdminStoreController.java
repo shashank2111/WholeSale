@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,8 +66,9 @@ public class AdminStoreController {
 		model.addAttribute("allCategories", allCategories);
 		List<Product> allProducts = productServiceImpl.getAllProducts();
 		model.addAttribute("allProducts", allProducts);
+
 		model.addAttribute("toshow",false);
-		model.addAttribute("email", principal.getName());
+		model.addAttribute("email", principal.getName()); 
 		return "storemanagement";
 	}
 	
@@ -91,9 +93,15 @@ public class AdminStoreController {
 		List<Category> allCategories =  storeServiceImpl.getAllCategories();
 		model.addAttribute("allCategories", allCategories);
 		List<Product> allProductswithCategoryID = productServiceImpl.getAllProductswithCategoryID(categoryID);
+		for(Product p:allProductswithCategoryID) {
+			System.out.println(p.getProductname());
+		}
+		
 		model.addAttribute("allProductswithCategoryID", allProductswithCategoryID);
 		model.addAttribute("toshow", true);
 		model.addAttribute("categorytype", categorytype);
+		
+		
 		return "storemanagement"; 
 	}
 	
@@ -182,14 +190,37 @@ public class AdminStoreController {
 		
 		return "redirect:/store";
 	}
-
-	@PostMapping("/store/product/edit")
-	public String handleCurrentEmployee(@ModelAttribute("productcurrent") Product product,BindingResult bindingResult,HttpServletRequest request,RedirectAttributes redirectAttributes,Model model,Principal principal) {
+	
+	@GetMapping("/store/product/edit/{productID}")
+	public String handleProductEdit(@PathVariable("productID") int productID ,Model model,Principal principal) {
 //		System.out.println(employee.toString());
 		model.addAttribute("useremail",principal.getName()); 
+		
+		Product product = productServiceImpl.getProductfromProductID(productID);
 		model.addAttribute("originalproduct",product);
-		System.out.println(product.toString());
+
 		return "productedit";
+	}
+	
+	@GetMapping("/store/product/delete/{productID}")
+	public String handleProductDelete(@PathVariable("productID") int productID ,Model model,Principal principal) {
+		model.addAttribute("useremail",principal.getName()); 
+		
+//		Product product = productServiceImpl.getProductfromProductID(productID);
+//		model.addAttribute("originalproduct",product);
+		
+		int cR = productServiceImpl.deleteProductwithProductID(productID);
+		
+		return "redirect:/store"; 
+	}
+	
+	@PostMapping("/store/product/edit/confirm")
+	public String handleProductEditConfirm(@ModelAttribute("product") Product product, Model model,Principal principal) {
+		model.addAttribute("useremail",principal.getName()); 
+		
+		int productID = productServiceImpl.updateProduct(product);
+		
+		return "redirect:/store";
 	}
 	
 	
